@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probability and Uncertainty · Week 2 — Mathematics Weekly</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Georgia,"Computer Modern","Noto Serif SC",serif;background:#f5f7fa;color:#1a1f2e;line-height:1.85}
+.container{max-width:780px;margin:0 auto;padding:24px 22px 64px}
+header{text-align:center;padding:52px 0 36px;border-bottom:1px solid #c0c8d4;margin-bottom:36px}
+header .kicker{font-size:0.82rem;letter-spacing:4px;color:#3a6088;text-transform:uppercase;margin-bottom:14px}
+header h1{font-size:2.2rem;font-weight:800;color:#1e3a5f;font-family:"Times New Roman",Georgia,serif;font-style:italic;letter-spacing:1px}
+header .meta{margin-top:14px;font-size:0.92rem;color:#5a7090}
+header .epigraph{margin-top:22px;font-size:0.95rem;color:#5a7090;font-style:italic;max-width:560px;margin-left:auto;margin-right:auto;padding:0 16px;border-left:2px solid #c0c8d4;border-right:2px solid #c0c8d4}
+.card{background:#fff;border-radius:8px;padding:32px 30px;margin-bottom:28px;box-shadow:0 2px 14px rgba(30,58,95,0.07);border-top:3px solid #3a6088}
+.card h2{font-size:1.45rem;color:#1e3a5f;font-family:"Times New Roman",Georgia,serif;margin-bottom:4px;font-weight:700}
+.card .en-name{font-size:0.95rem;color:#5a7090;font-style:italic;margin-bottom:10px}
+.tag{display:inline-block;background:#e6ecf3;color:#3a6088;font-size:0.72rem;padding:3px 10px;border-radius:12px;letter-spacing:1px;margin-bottom:18px;text-transform:uppercase}
+.section{margin-top:18px}
+.section .label{font-size:0.78rem;color:#3a6088;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.section .label::before{content:"";display:inline-block;width:14px;height:1px;background:#3a6088}
+.section p{font-size:1rem;color:#2a3548}
+.section ul{margin-top:4px;padding-left:22px}
+.section ul li{margin-bottom:4px}
+.formula-box{background:#f0f4f9;border-left:3px solid #1e3a5f;padding:18px 22px;margin:14px 0;font-size:1.1rem;color:#1e3a5f;text-align:center;overflow-x:auto}
+.intuition{background:#fbfaf3;border-left:3px solid #c9a96b;padding:14px 18px;margin-top:6px;font-style:italic;color:#3d3520}
+.viz{display:flex;justify-content:center;margin:22px 0;padding:18px;background:#fafbfd;border-radius:6px}
+.viz svg{max-width:100%;height:auto}
+.quote{font-style:italic;color:#5a7090;border-left:2px solid #c0c8d4;padding-left:14px;margin:14px 0;font-size:0.95rem}
+.resources a{color:#3a6088;text-decoration:none;border-bottom:1px dotted #3a6088}
+.resources a:hover{color:#1e3a5f;border-bottom-style:solid}
+.english{background:#f7f5f0;padding:14px 18px;border-radius:4px;font-size:0.92rem;color:#4a3c2a;margin-top:6px}
+.english strong{color:#1e3a5f}
+.think{background:#eef2f6;padding:14px 18px;border-radius:4px;font-size:0.96rem;color:#2a3548;margin-top:6px;border-left:3px solid #1e3a5f}
+nav.bottom{text-align:center;margin-top:40px;padding-top:24px;border-top:1px solid #c0c8d4}
+nav.bottom a{color:#3a6088;text-decoration:none;font-size:0.95rem;font-style:italic}
+nav.bottom a:hover{color:#1e3a5f}
+@media(max-width:600px){.container{padding:16px 14px 40px}header h1{font-size:1.55rem}.card{padding:24px 18px}.card h2{font-size:1.2rem}.formula-box{font-size:0.95rem;padding:14px 12px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="kicker">Week 2 · 2026.05.22</div>
+  <h1>Probability and Uncertainty</h1>
+  <div class="meta">How to make slightly-less-wrong judgments in a world you can't quite see</div>
+  <div class="epigraph">"The theory of probabilities is at bottom nothing but common sense reduced to calculus." — Pierre-Simon Laplace, <em>Essai philosophique sur les probabilités</em> (1814)</div>
+</header>
+
+<!-- Concept 1 -->
+<div class="card">
+  <h2>Bayes' Theorem: How Beliefs Update</h2>
+  <div class="en-name">Inference / Probability</div>
+  <span class="tag">Inference</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>You take a cancer screening test and it comes back positive. The prevalence of this cancer in your age group is <strong>1%</strong>. The test has 90% sensitivity (catches the disease when it's there) and 90% specificity (correctly clears you when it isn't). What's the probability you actually have cancer? Most people blurt out 90%. <strong>The real answer is about 8.3%.</strong></p>
+    <p>Picture 1,000 people just like you. About 10 truly have the disease, and the test flags 9 of them. Of the 990 healthy people, 10% are false positives — 99 of them. Total positives: 9 + 99 = 108. Truly sick among them: only 9. So $9/108 \approx 8.3\%$. That's Bayes' theorem in action — it fuses a prior belief (the base rate) with new evidence (the test result) into a posterior belief. In one sentence: <em>new belief = old belief × how strongly this evidence supports it</em>.</p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg">
+      <text x="180" y="20" font-size="11" fill="#1e3a5f" text-anchor="middle" font-weight="700">1000 people · natural frequencies</text>
+      <rect x="150" y="32" width="60" height="22" fill="#f0f4f9" stroke="#1e3a5f"/>
+      <text x="180" y="47" font-size="11" fill="#1e3a5f" text-anchor="middle">1000</text>
+      <line x1="180" y1="54" x2="80" y2="78" stroke="#3a6088" stroke-width="0.8"/>
+      <line x1="180" y1="54" x2="280" y2="78" stroke="#3a6088" stroke-width="0.8"/>
+      <text x="120" y="72" font-size="9" fill="#666">1% sick</text>
+      <text x="220" y="72" font-size="9" fill="#666">99% healthy</text>
+      <rect x="50" y="80" width="60" height="22" fill="#fbe3e0" stroke="#c9544a"/>
+      <text x="80" y="95" font-size="11" fill="#c9544a" text-anchor="middle">10 sick</text>
+      <rect x="250" y="80" width="60" height="22" fill="#e6ecf3" stroke="#3a6088"/>
+      <text x="280" y="95" font-size="11" fill="#3a6088" text-anchor="middle">990 healthy</text>
+      <line x1="80" y1="102" x2="50" y2="130" stroke="#c9544a" stroke-width="0.8"/>
+      <line x1="80" y1="102" x2="110" y2="130" stroke="#c9544a" stroke-width="0.8"/>
+      <line x1="280" y1="102" x2="250" y2="130" stroke="#3a6088" stroke-width="0.8"/>
+      <line x1="280" y1="102" x2="310" y2="130" stroke="#3a6088" stroke-width="0.8"/>
+      <rect x="22" y="132" width="60" height="22" fill="#c9544a"/>
+      <text x="52" y="147" font-size="11" fill="#fff" text-anchor="middle" font-weight="700">9 true+</text>
+      <rect x="92" y="132" width="50" height="22" fill="#fbe3e0" stroke="#c9544a" stroke-dasharray="2,2"/>
+      <text x="117" y="147" font-size="10" fill="#c9544a" text-anchor="middle">1 false−</text>
+      <rect x="218" y="132" width="64" height="22" fill="#c9a96b"/>
+      <text x="250" y="147" font-size="11" fill="#fff" text-anchor="middle" font-weight="700">99 false+</text>
+      <rect x="290" y="132" width="50" height="22" fill="#e6ecf3" stroke="#3a6088" stroke-dasharray="2,2"/>
+      <text x="315" y="147" font-size="10" fill="#3a6088" text-anchor="middle">891 true−</text>
+      <text x="180" y="185" font-size="12" fill="#1e3a5f" text-anchor="middle" font-style="italic">total positives = 9 + 99 = 108</text>
+      <text x="180" y="205" font-size="12" fill="#c9544a" text-anchor="middle" font-weight="700">P(sick | positive) = 9 / 108 ≈ 8.3%</text>
+    </svg>
+  </div>
+
+  <div class="formula-box">$$P(H \mid E) = \frac{P(E \mid H)\, P(H)}{P(E)}$$</div>
+
+  <div class="section">
+    <div class="label">Why it's beautiful</div>
+    <p>Bayes' formula lifts "rational updating" out of intuition and into algebra. It shows that ignoring the prior — the so-called <em>base-rate neglect</em> — is one of the most systematic errors human cognition makes. Kahneman built an entire book, <em>Thinking, Fast and Slow</em>, on documenting it. To the Bayesian, <strong>probability is not a property of the world; it is the strength of an observer's belief</strong>. That stance was one of the great schisms of 20th-century scientific philosophy (frequentists vs Bayesians). E.T. Jaynes opens <em>Probability Theory: The Logic of Science</em> with: "Probability theory is an extension of logic — promoting Boolean algebra from {true, false} to a continuum of plausibilities on [0, 1]."</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>Spam filtering (each word is evidence; the posterior "is this email spam?" gets updated word by word); medical diagnosis (reading a positive test result without the base rate is essentially guaranteed to mislead); Bayesian networks, MCMC, variational inference, Bayesian deep learning — entire branches of modern AI; courtroom reasoning (the defense in the O.J. Simpson trial famously conflated $P(\text{guilty} \mid \text{evidence})$ with $P(\text{evidence} \mid \text{guilty})$ — a confusion now known as the <em>prosecutor's fallacy</em>).</p>
+  </div>
+
+  <div class="section">
+    <div class="label">History</div>
+    <p>Thomas Bayes (1701–1761) was an English Presbyterian minister and amateur mathematician. He never published his theorem; his friend Richard Price read it aloud to the Royal Society in 1763, two years after Bayes died. Pierre-Simon Laplace rediscovered and systematized it independently, and did most of the work of spreading it. By the late 19th century, R.A. Fisher and other frequentists had pushed the Bayesian school into the wilderness for nearly a hundred years. It returned only in the 1980s — thanks to computers and the MCMC algorithm — and has since become one of the dominant frameworks in statistics and AI.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Going deeper</div>
+    <p class="resources">
+      • 3Blue1Brown — <a href="https://www.youtube.com/watch?v=lG4VkPoG3ko"><em>The medical test paradox</em></a><br>
+      • E.T. Jaynes — <em>Probability Theory: The Logic of Science</em> (the Bayesian bible)
+    </p>
+  </div>
+
+  <div class="english">
+    <strong>English Insight:</strong> <strong>prior</strong> — your belief before seeing the evidence; <strong>posterior</strong> — your belief after; <strong>likelihood</strong> — $P(E \mid H)$, the probability of the evidence given the hypothesis (constantly confused with $P(H \mid E)$, the other direction); <strong>base-rate neglect</strong>; <strong>prosecutor's fallacy</strong> — confusing those two conditional probabilities in court.
+  </div>
+
+  <div class="think">
+    <strong>Something to chew on:</strong> If an AI classifier always predicts the most common class, its accuracy can look high — but is it a good classifier? Is that the same trap as "a positive cancer test usually means you're healthy"? Why is "accuracy" so misleading for rare-class problems?
+  </div>
+</div>
+
+<!-- Concept 2 -->
+<div class="card">
+  <h2>Monte Carlo: Cracking Problems with Randomness</h2>
+  <div class="en-name">Computation / Simulation</div>
+  <span class="tag">Computation</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>You want to compute $\pi$, but you don't know calculus. Draw a $2 \times 2$ square, inscribe a unit circle. The circle has area $\pi$, the square has area 4, so the ratio is $\pi/4$. Now <strong>close your eyes and throw beans at the square at random</strong>. After 100,000 throws, take the fraction that landed inside the circle, multiply by 4, and you have an approximation of $\pi$.</p>
+    <p>That's Monte Carlo: <strong>when a problem resists analytic solution, simulate it many times and let the law of large numbers compute the answer for you</strong>. It flips uncertainty into a tool. You stop fighting randomness and start using it as a hammer.</p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+      <rect x="60" y="20" width="160" height="160" fill="none" stroke="#1e3a5f" stroke-width="1.5"/>
+      <circle cx="140" cy="100" r="80" fill="#f0f4f9" stroke="#3a6088" stroke-width="1.2"/>
+      <g fill="#c9544a"><circle cx="78" cy="35" r="1.8"/><circle cx="210" cy="42" r="1.8"/><circle cx="72" cy="160" r="1.8"/><circle cx="215" cy="170" r="1.8"/><circle cx="68" cy="80" r="1.8"/><circle cx="212" cy="125" r="1.8"/><circle cx="195" cy="28" r="1.8"/><circle cx="75" cy="172" r="1.8"/></g>
+      <g fill="#3a6088"><circle cx="120" cy="60" r="1.8"/><circle cx="160" cy="80" r="1.8"/><circle cx="100" cy="110" r="1.8"/><circle cx="155" cy="130" r="1.8"/><circle cx="135" cy="95" r="1.8"/><circle cx="180" cy="100" r="1.8"/><circle cx="115" cy="140" r="1.8"/><circle cx="170" cy="55" r="1.8"/><circle cx="90" cy="95" r="1.8"/><circle cx="140" cy="155" r="1.8"/><circle cx="125" cy="125" r="1.8"/><circle cx="155" cy="45" r="1.8"/><circle cx="105" cy="75" r="1.8"/><circle cx="175" cy="140" r="1.8"/><circle cx="135" cy="115" r="1.8"/><circle cx="165" cy="115" r="1.8"/><circle cx="110" cy="60" r="1.8"/><circle cx="145" cy="75" r="1.8"/><circle cx="95" cy="125" r="1.8"/></g>
+      <text x="250" y="95" font-size="11" fill="#3a6088">inside</text>
+      <text x="250" y="115" font-size="11" fill="#c9544a">outside</text>
+      <text x="140" y="195" font-size="11" fill="#1e3a5f" text-anchor="middle" font-style="italic">π ≈ 4 × (inside / total)</text>
+    </svg>
+  </div>
+
+  <div class="section">
+    <div class="label">Formally</div>
+    <p>To estimate $\mathbb{E}[f(X)]$, draw independent samples $X_1, X_2, \ldots, X_n$ and approximate with $\frac{1}{n}\sum_{i=1}^n f(X_i)$. The error decays as $O(1/\sqrt{n})$ — slow, but <strong>independent of dimension</strong>. That dimension-independence is the killer feature.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why it's beautiful</div>
+    <p>Classical numerical methods (grids, finite elements) cost $O(N^d)$ in dimension $d$. Three dimensions are fine; thirty dimensions are catastrophic. Monte Carlo's error depends only on the number of samples — <strong>the curse of dimensionality simply doesn't apply to it</strong>. That's why it's the go-to tool for pricing financial derivatives (dozens of asset dimensions), Bayesian inference (hundreds of parameters), and tree search in AlphaGo (an astronomical state space). The deepest beauty: Monte Carlo doesn't solve the problem — it <strong>sidesteps</strong> it. That maneuver, refusing to fight the battle on the enemy's terms, is one of the purest expressions of mathematical spirit.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>The Manhattan Project: simulating neutron diffusion through fissile material — the birthplace of the method. Finance: option pricing, value-at-risk. Physics: the Ising model, lattice QCD. AI: AlphaGo's Monte Carlo Tree Search, policy evaluation in reinforcement learning. Film CGI: modern path tracing is essentially Monte Carlo integration in a very high-dimensional space — Pixar is throwing beans for every frame.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">History</div>
+    <p>In 1946 the physicist Stanislaw Ulam was recovering from an illness at Los Alamos and playing solitaire to pass the time. He started wondering how to compute the probability of winning a hand. Rather than enumerate every possibility, he realized, he could just simulate many hands and take the frequency. He and John von Neumann turned the idea on neutron simulation for the hydrogen bomb. Nicholas Metropolis named it "Monte Carlo" — Ulam's uncle had a habit of gambling in Monaco. The 1953 Metropolis–Hastings algorithm laid the foundation for modern MCMC.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Going deeper</div>
+    <p class="resources">
+      • 3Blue1Brown — <a href="https://www.youtube.com/watch?v=zeJD6dqJ5lo"><em>But what is the Central Limit Theorem?</em></a><br>
+      • Christian Robert &amp; George Casella — <em>Monte Carlo Statistical Methods</em>
+    </p>
+  </div>
+
+  <div class="english">
+    <strong>English Insight:</strong> <strong>Monte Carlo method</strong> — usually left untranslated; <strong>importance sampling</strong>, <strong>rejection sampling</strong> — two basic variance-reduction tricks; <strong>MCMC</strong> = Markov Chain Monte Carlo; <strong>curse of dimensionality</strong> — exponential cost in dimension, the thing Monte Carlo escapes.
+  </div>
+
+  <div class="think">
+    <strong>Something to chew on:</strong> 100,000 bean-throws gets you only two digits of $\pi$ — that looks terrible. But what if you need the volume of a 30-dimensional ball? A grid would need at least $10^{30}$ points; Monte Carlo still needs only a few tens of thousands of samples. What intuition does that give you about high-dimensional space? Why is "high-dimensional" in some sense <em>friendlier</em> to randomized methods?
+  </div>
+</div>
+
+<!-- Concept 3 -->
+<div class="card">
+  <h2>Expected Value: The Center of Mass of Randomness</h2>
+  <div class="en-name">Foundations of Probability</div>
+  <span class="tag">Expectation</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>Roll a fair die. What do you "expect" to see? The answer is 3.5. But no die has a 3.5 face — you will never, on a single roll, get 3.5. So "expected value" is a slightly misleading phrase. It doesn't mean "what I expect to happen." It means <strong>"if I played this game ten thousand times, what would my average outcome be?"</strong></p>
+    <p>A better metaphor: imagine the probability distribution as a thin wire, with a little ball hanging at each possible outcome, weighted by its probability. <strong>The expected value is the wire's center of mass</strong> — the single point where one finger would balance the entire distribution. This is why mathematicians sometimes call it the <em>first moment</em> — etymologically the same "moment" as "mass times distance" in mechanics.</p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 340 180" xmlns="http://www.w3.org/2000/svg">
+      <line x1="30" y1="120" x2="310" y2="120" stroke="#1e3a5f" stroke-width="1.5"/>
+      <g fill="#3a6088" stroke="#1e3a5f" stroke-width="0.8">
+        <rect x="55" y="100" width="22" height="20"/>
+        <rect x="90" y="80" width="22" height="40"/>
+        <rect x="125" y="55" width="22" height="65"/>
+        <rect x="160" y="35" width="22" height="85"/>
+        <rect x="195" y="55" width="22" height="65"/>
+        <rect x="230" y="80" width="22" height="40"/>
+        <rect x="265" y="100" width="22" height="20"/>
+      </g>
+      <polygon points="171,120 161,140 181,140" fill="#c9544a"/>
+      <line x1="171" y1="140" x2="171" y2="150" stroke="#c9544a" stroke-width="1.5"/>
+      <text x="171" y="165" font-size="11" fill="#c9544a" text-anchor="middle" font-style="italic" font-weight="700">E[X] · center of mass</text>
+      <text x="170" y="25" font-size="10" fill="#1e3a5f" text-anchor="middle" font-style="italic">probability distribution</text>
+    </svg>
+  </div>
+
+  <div class="formula-box">$$\mathbb{E}[X] = \sum_i x_i \cdot P(X = x_i) \quad \text{or} \quad \int x \, f(x)\, dx$$</div>
+
+  <div class="section">
+    <div class="label">Why it's beautiful</div>
+    <p>Expectation has one stunning property: <strong>linearity</strong>. $\mathbb{E}[X + Y] = \mathbb{E}[X] + \mathbb{E}[Y]$, <strong>even when $X$ and $Y$ are not independent</strong> — they can be arbitrarily correlated and the equation still holds. It is one of the few unconditional free lunches in probability theory. Countless hard problems collapse with one line of it: draw $n$ cards at random; what is the expected number of pairs? Define a 0/1 indicator variable for each pair, take its expectation, sum — no need to worry about whether the indicators are independent. This "decompose into indicators, then sum" trick is nearly unbeatable in combinatorial probability.</p>
+    <p>But expectation also has its traps. In 1738, Daniel Bernoulli posed the <strong>St. Petersburg paradox</strong>: a game whose mathematical expectation is infinite, but no one will pay even $1,000 to play. That contradiction forced the invention of <em>utility theory</em>: people care not only about the expected money, but about variance and risk aversion. It's the seed of behavioral economics.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>Insurance pricing: premium ≈ expected payout + operating cost + profit. The Kelly criterion: the optimal bet size in gambling or investing. Reinforcement learning's Bellman equation $V(s) = \mathbb{E}[r + \gamma V(s')]$ is just expectation written recursively. Nearly every theoretical framework that defines "rationality" as "maximizing expected utility" starts here.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">History</div>
+    <p>In 1654 the French nobleman Chevalier de Méré asked Pascal a gambling question: "If two players are playing a series to a fixed score and have to stop early, how should the pot be divided?" Pascal and Fermat exchanged letters on this <em>Problem of Points</em> — that correspondence is widely regarded as the birth of modern probability theory, and expected value was their main tool. Christiaan Huygens' 1657 treatise <em>De Ratiociniis in Ludo Aleae</em> was the first formal written definition.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Going deeper</div>
+    <p class="resources">
+      • Leonard Mlodinow — <em>The Drunkard's Walk: How Randomness Rules Our Lives</em><br>
+      • Steven Strogatz — <em>The Joy of x</em>, "Chances Are" chapter
+    </p>
+  </div>
+
+  <div class="english">
+    <strong>English Insight:</strong> <strong>expectation / expected value / mean</strong> — used interchangeably; <strong>variance</strong>, <strong>standard deviation</strong>, <strong>moment</strong>; <strong>linearity of expectation</strong> — possibly the single most powerful one-liner in combinatorial probability.
+  </div>
+
+  <div class="think">
+    <strong>Something to chew on:</strong> The St. Petersburg game: flip a coin until you see the first tails; if it appears on flip $n$, you win $2^n$ dollars. The expectation is $\sum_{n=1}^\infty 2^n \cdot 2^{-n} = \infty$. So how much would you pay to play? Most people answer somewhere between 10 and 30 dollars. The gap between "infinite expectation" and "what I'd pay" — what does it tell us about rationality? Is the mathematics wrong, or does the very concept of "rational" need rewriting?
+  </div>
+</div>
+
+<!-- Concept 4 -->
+<div class="card">
+  <h2>Law of Large Numbers vs the Law of Small Numbers</h2>
+  <div class="en-name">Limit Theorems / Cognitive Bias</div>
+  <span class="tag">Limit Theorems</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p><strong>The Law of Large Numbers (LLN):</strong> repeat a random experiment enough times, and the sample average converges to the expected value. Flip a fair coin a million times and the proportion of heads will be essentially 50%. This sounds obvious — but proving it rigorously requires the full machinery of modern analysis.</p>
+    <p>The trouble is, humans have a strange cognitive bug: we treat <strong>small samples as if they already represent the whole</strong>. Kahneman and Tversky's 1971 paper called this <strong>the Law of Small Numbers</strong>. Flip a coin four times and get four heads — many people feel "tails are due." They are not. The coin has no memory. That's the <strong>gambler's fallacy</strong>. The opposite illusion: a basketball player hits five shots in a row and the crowd declares he has "the hot hand" — the <strong>hot-hand fallacy</strong>. Gilovich et al. in 1985 argued this was illusion, but Miller &amp; Sanjurjo's 2018 reanalysis found that hot streaks are, in fact, sometimes real — the original paper, it turned out, had committed a subtle statistical bias of its own. Human intuition is easy to fool, but so are the studies that critique it.</p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 340 180" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="160" x2="320" y2="160" stroke="#666" stroke-width="0.8"/>
+      <line x1="40" y1="20" x2="40" y2="160" stroke="#666" stroke-width="0.8"/>
+      <text x="180" y="175" font-size="10" fill="#666" text-anchor="middle">sample size n (log scale)</text>
+      <text x="30" y="25" font-size="10" fill="#666" text-anchor="end">sample mean</text>
+      <line x1="40" y1="90" x2="320" y2="90" stroke="#1e3a5f" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="324" y="93" font-size="10" fill="#1e3a5f">μ = E[X]</text>
+      <path d="M 40 40 L 60 130 L 80 60 L 100 125 L 120 70 L 140 105 L 160 80 L 180 100 L 200 85 L 220 95 L 240 88 L 260 93 L 280 90 L 300 91 L 320 90" fill="none" stroke="#c9544a" stroke-width="1.5"/>
+      <text x="75" y="50" font-size="9" fill="#c9544a" font-style="italic">small n: wild swings</text>
+      <text x="245" y="80" font-size="9" fill="#c9544a" font-style="italic">large n: convergence</text>
+    </svg>
+  </div>
+
+  <div class="formula-box">$$\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i \;\xrightarrow{P}\; \mu \quad (n \to \infty)$$</div>
+
+  <div class="section">
+    <div class="label">Why it's beautiful — and why we keep tripping over it</div>
+    <p>LLN is the bridge between "probability" and "reality": without it, expectation would be an empty concept. Jacob Bernoulli proved it rigorously for the first time in his posthumously published <em>Ars Conjectandi</em> (1713). But LLN only kicks in when $n$ is genuinely large — and humans' sense of "large enough" is wildly out of sync with mathematics'. Five out of your five stock picks beat the market? That tells you nothing about your skill. An A/B test with only 100 visitors? Not trustworthy. A small-sample epidemiological study? Likely to flip on replication. <strong>Half the work of statistics is dragging "interesting small-sample observations" back to ground.</strong></p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications / cautionary tales</div>
+    <p>Finance: a fund manager beats the market five years running — skill or luck? Brinson-Hood-Beebower argued most of it is luck; survivorship bias means we only ever notice the winners. Medicine: the early COVID flood of small studies claiming "drug X works" — almost all of them failed to replicate. AI: a model hits 95% on a 100-sample hold-out set, then craters in production — distribution shift compounded by tiny-sample evaluation noise. Hiring, investing, evaluating a founder: judging someone from a single interview or a single business plan is, at root, fighting the law of large numbers with a sample size of one.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">History</div>
+    <p>Jacob Bernoulli (1654–1705) gave the first rigorous proof of LLN and called it the <strong>"golden theorem"</strong> (<em>theorema aureum</em>). He wrote: "Even the dullest person knows by instinct that more observations bring us closer to the truth. But turning that instinct into a rigorous mathematical theorem is far harder than it seems — it took me twenty years." Kahneman and Tversky's 1971 paper <em>Belief in the Law of Small Numbers</em> formally diagnosed the cognitive bias and helped found behavioral economics. Nassim Taleb pushed it further: under <strong>fat-tailed</strong> distributions, the sample mean itself becomes unreliable — a single black swan can blow up any previously "known" average.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Going deeper</div>
+    <p class="resources">
+      • Daniel Kahneman — <em>Thinking, Fast and Slow</em>, Chapter 10 "The Law of Small Numbers"<br>
+      • Nassim Taleb — <em>Fooled by Randomness</em>
+    </p>
+  </div>
+
+  <div class="english">
+    <strong>English Insight:</strong> <strong>Law of Large Numbers (LLN)</strong>; <strong>Central Limit Theorem (CLT)</strong>; <strong>regression to the mean</strong>; <strong>survivorship bias</strong>; <strong>gambler's fallacy</strong> / <strong>hot-hand fallacy</strong>; <strong>statistical significance</strong>; <strong>fat-tailed distribution</strong>.
+  </div>
+
+  <div class="think">
+    <strong>Something to chew on:</strong> If "small samples cannot be trusted," why do the singular anecdotes of the Bible, of Sima Qian's <em>Records of the Grand Historian</em>, of every ancient text, still shape entire worldviews generation after generation? Perhaps the human brain isn't built for the law of large numbers at all — it is built for "the representativeness of a single vivid story." What does that mean for what we should, and shouldn't, believe today?
+  </div>
+</div>
+
+<nav class="bottom">
+  <a href="index.en.html">← Back to Mathematics Weekly</a>
+</nav>
+
+</div>
+</body>
+</html>
