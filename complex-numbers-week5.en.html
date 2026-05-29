@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complex Numbers &amp; Geometry · Week 5 — Mathematics Weekly</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Georgia,"Computer Modern","Noto Serif SC",serif;background:#f5f7fa;color:#1a1f2e;line-height:1.85}
+.container{max-width:780px;margin:0 auto;padding:24px 22px 64px}
+header{text-align:center;padding:52px 0 36px;border-bottom:1px solid #c0c8d4;margin-bottom:36px}
+header .kicker{font-size:0.82rem;letter-spacing:4px;color:#3a6088;text-transform:uppercase;margin-bottom:14px}
+header h1{font-size:2.2rem;font-weight:800;color:#1e3a5f;font-family:"Times New Roman",Georgia,serif;font-style:italic;letter-spacing:1px}
+header .meta{margin-top:14px;font-size:0.92rem;color:#5a7090}
+header .epigraph{margin-top:22px;font-size:0.95rem;color:#5a7090;font-style:italic;max-width:560px;margin-left:auto;margin-right:auto;padding:0 16px;border-left:2px solid #c0c8d4;border-right:2px solid #c0c8d4}
+.card{background:#fff;border-radius:8px;padding:32px 30px;margin-bottom:28px;box-shadow:0 2px 14px rgba(30,58,95,0.07);border-top:3px solid #3a6088}
+.card h2{font-size:1.45rem;color:#1e3a5f;font-family:"Times New Roman",Georgia,serif;margin-bottom:4px;font-weight:700}
+.card .en-name{font-size:0.95rem;color:#5a7090;font-style:italic;margin-bottom:10px}
+.tag{display:inline-block;background:#e6ecf3;color:#3a6088;font-size:0.72rem;padding:3px 10px;border-radius:12px;letter-spacing:1px;margin-bottom:18px;text-transform:uppercase}
+.section{margin-top:18px}
+.section .label{font-size:0.78rem;color:#3a6088;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.section .label::before{content:"";display:inline-block;width:14px;height:1px;background:#3a6088}
+.section p{font-size:1rem;color:#2a3548}
+.section ul{margin-top:4px;padding-left:22px}
+.section ul li{margin-bottom:4px}
+.formula-box{background:#f0f4f9;border-left:3px solid #1e3a5f;padding:18px 22px;margin:14px 0;font-size:1.1rem;color:#1e3a5f;text-align:center;overflow-x:auto}
+.intuition{background:#fbfaf3;border-left:3px solid #c9a96b;padding:14px 18px;margin-top:6px;font-style:italic;color:#3d3520}
+.viz{display:flex;justify-content:center;margin:22px 0;padding:18px;background:#fafbfd;border-radius:6px}
+.viz svg{max-width:100%;height:auto}
+.quote{font-style:italic;color:#5a7090;border-left:2px solid #c0c8d4;padding-left:14px;margin:14px 0;font-size:0.95rem}
+.essence{background:#fbfaf3;border-left:3px solid #c9a96b;padding:12px 18px;margin-top:6px;color:#3d3520;font-weight:600}
+.think{background:#eef2f6;padding:14px 18px;border-radius:4px;font-size:0.96rem;color:#2a3548;margin-top:6px;border-left:3px solid #1e3a5f}
+details{background:#eef2f6;border-radius:4px;padding:12px 18px;margin-bottom:12px;border-left:3px solid #3a6088}
+details summary{cursor:pointer;font-weight:600;color:#1e3a5f}
+details div{margin-top:10px;font-size:0.95rem;color:#2a3548}
+nav.bottom{text-align:center;margin-top:40px;padding-top:24px;border-top:1px solid #c0c8d4}
+nav.bottom a{color:#3a6088;text-decoration:none;font-size:0.95rem;font-style:italic}
+nav.bottom a:hover{color:#1e3a5f}
+@media(max-width:600px){.container{padding:16px 14px 40px}header h1{font-size:1.55rem}.card{padding:24px 18px}.card h2{font-size:1.2rem}.formula-box{font-size:0.95rem;padding:14px 12px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="kicker">Week 5 · 2026.05.29</div>
+  <h1>Complex Numbers &amp; Geometry</h1>
+  <div class="meta">When numbers learned to rotate</div>
+  <div class="epigraph">"The shortest path between two truths in the real domain passes through the complex domain." — Jacques Hadamard</div>
+</header>
+
+<!-- Concept 1: The Complex Plane -->
+<div class="card">
+  <h2>The Complex Plane</h2>
+  <div class="en-name">Adding a dimension to the number line</div>
+  <span class="tag">Complex Analysis</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>Real numbers are all crammed onto a one-dimensional line — you can only go left or right. That line is too narrow. <strong>Inventing $i$ amounts to bolting an "up-down" dimension onto the number line.</strong> A complex number $a+bi$ is no longer a point on a line but <strong>an arrow in a plane</strong>: walk $a$ across, $b$ up.<br><br>"Imaginary" is the worst naming in the history of mathematics. These numbers are neither illusory nor any less "real" than negatives — they simply live in two dimensions instead of one. Negatives were once derided as "absurd numbers"; irrationals once terrified the Pythagoreans. Every expansion of the number system, humanity first resisted, then accepted. Complex numbers are just the next stop on that road.</p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 340 220" xmlns="http://www.w3.org/2000/svg">
+      <line x1="20" y1="170" x2="320" y2="170" stroke="#aaa" stroke-width="0.8"/>
+      <line x1="120" y1="20" x2="120" y2="205" stroke="#aaa" stroke-width="0.8"/>
+      <text x="312" y="186" font-size="10" fill="#666">Re</text>
+      <text x="126" y="30" font-size="10" fill="#666">Im</text>
+      <line x1="120" y1="170" x2="250" y2="80" stroke="#c9544a" stroke-width="2"/>
+      <circle cx="250" cy="80" r="3.5" fill="#c9544a"/>
+      <text x="256" y="76" font-size="11" fill="#c9544a" font-style="italic">z = a + bi</text>
+      <line x1="250" y1="80" x2="250" y2="170" stroke="#3a6088" stroke-width="0.8" stroke-dasharray="3,3"/>
+      <line x1="120" y1="80" x2="250" y2="80" stroke="#3a6088" stroke-width="0.8" stroke-dasharray="3,3"/>
+      <text x="185" y="184" font-size="10" fill="#3a6088">a</text>
+      <text x="256" y="128" font-size="10" fill="#3a6088">b</text>
+      <text x="170" y="118" font-size="10" fill="#c9544a" font-style="italic">|z|</text>
+      <path d="M 150 170 A 30 30 0 0 0 144 152" fill="none" stroke="#c9a96b" stroke-width="1.2"/>
+      <text x="150" y="160" font-size="9" fill="#8a7340">θ</text>
+    </svg>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal Definition</div>
+    <div class="formula-box">$$z = a + bi, \qquad i^2 = -1$$</div>
+    <p>$a$ is the real part (horizontal), $b$ the imaginary part (vertical). The <strong>modulus</strong> $|z|=\sqrt{a^2+b^2}$ is the arrow's length; the <strong>argument</strong> $\arg z$ is its angle $\theta$ from the positive real axis. In short, a complex number = a length + a direction.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why It's Beautiful</div>
+    <p>The real line has a "hole": $x^2+1=0$ has no solution. The complex plane fills it. The <strong>Fundamental Theorem of Algebra</strong> says any degree-$n$ polynomial has exactly $n$ roots over the complex numbers — not one more, not one fewer. The reals are incomplete; the complex field is <strong>algebraically closed</strong> — every polynomial equation is solvable. Just by stepping from one dimension to two, the number system suddenly becomes whole. That completeness is itself a structural beauty.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>The Fourier transform breaks a signal into frequencies, each a complex number (carrying both amplitude and phase). Circuit impedance, control-system stability (which side of the plane the poles fall on decides whether a system blows up), quantum states — all live in the complex plane. In deep learning, FFT-accelerated convolution and complex-valued features handling phase all run on this same plane underneath.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">In One Line</div>
+    <div class="essence">"Imaginary" numbers live in a plane — as real as the coins in your pocket.</div>
+    <div class="label" style="margin-top:14px">Question</div>
+    <div class="think">It took humanity over a thousand years to accept negatives, and centuries more for complex numbers. What exactly are we resisting when we recoil from numbers we "can't see or touch" — the numbers themselves, or the limits of our imagination?</div>
+  </div>
+</div>
+
+<!-- Concept 2: Euler's Formula -->
+<div class="card">
+  <h2>Euler's Formula</h2>
+  <div class="en-name">Growth and rotation are the same thing</div>
+  <span class="tag">Analysis · Geometry</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>Raising a number to an "imaginary" power — $e^{i\theta}$ — sounds like nonsense. Reframe it: $e^x$ describes <strong>continuous growth</strong>, where the rate of growth is proportional to your current size. So what is $e^{i\theta}$? Multiplying by $i$ means "rotate the growth direction by 90°." Now growth no longer shoots outward but stays <strong>forever perpendicular to your current position</strong> — which is precisely the definition of going in a circle. So $e^{i\theta}$ neither explodes nor decays; it just <strong>rotates at constant speed around the unit circle</strong>, with $\theta$ the radians turned.</p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+      <line x1="20" y1="110" x2="300" y2="110" stroke="#aaa" stroke-width="0.8"/>
+      <line x1="160" y1="20" x2="160" y2="200" stroke="#aaa" stroke-width="0.8"/>
+      <circle cx="160" cy="110" r="80" fill="none" stroke="#3a6088" stroke-width="1.2"/>
+      <line x1="160" y1="110" x2="217" y2="53" stroke="#c9544a" stroke-width="2"/>
+      <circle cx="217" cy="53" r="3.5" fill="#c9544a"/>
+      <text x="222" y="50" font-size="11" fill="#c9544a" font-style="italic">e^(iθ)</text>
+      <line x1="217" y1="53" x2="217" y2="110" stroke="#7a9a6a" stroke-width="1" stroke-dasharray="3,3"/>
+      <line x1="160" y1="110" x2="217" y2="110" stroke="#c9a96b" stroke-width="1.4"/>
+      <text x="183" y="124" font-size="10" fill="#8a7340">cos θ</text>
+      <text x="222" y="88" font-size="10" fill="#5a7a4a">sin θ</text>
+      <path d="M 200 110 A 40 40 0 0 0 188 82" fill="none" stroke="#666" stroke-width="1"/>
+      <text x="196" y="100" font-size="9" fill="#666">θ</text>
+      <text x="244" y="180" font-size="10" fill="#666">unit circle |z|=1</text>
+    </svg>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal Definition</div>
+    <div class="formula-box">$$e^{i\theta} = \cos\theta + i\sin\theta$$</div>
+    <p>$\theta$ is the angle (radians); the real part is $\cos\theta$, the imaginary part $\sin\theta$ — exactly the coordinates of that point on the unit circle. Setting $\theta=\pi$ (a half-turn to $-1$) gives the immortal <strong>Euler identity</strong> $e^{i\pi}+1=0$, threading together the five most important constants.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why It's Beautiful</div>
+    <p>The exponential speaks of "growth," trigonometry of "oscillation" — two seemingly unrelated crafts. Euler's formula says they are <strong>the same rotation</strong>, projected onto two different directions. Analysis ($e$), geometry (the circle and $\pi$), and algebra ($i$) are welded together in a single line. Feynman called it "our jewel, the most remarkable formula in mathematics."</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>It is the soul of Fourier analysis — any signal decomposes into a sum of $e^{i\omega t}$ terms, the mathematical bedrock of audio compression, image processing, and 5G. AC power and quantum wavefunctions rely on it too. The Transformer's positional encoding uses $\sin/\cos$ to order tokens — essentially mapping each position to a different angle on the unit circle.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">In One Line</div>
+    <div class="essence">Growth and rotation are the same act — it only depends on which way you push.</div>
+    <div class="label" style="margin-top:14px">Question</div>
+    <div class="think">What is $i^i$? An imaginary number raised to an imaginary power turns out to be a real number, $e^{-\pi/2}\approx 0.207$. Why does the "most imaginary" operation fall straight back onto the real axis?</div>
+  </div>
+</div>
+
+<!-- Concept 3: Multiplication as Rotation -->
+<div class="card">
+  <h2>Multiplication as Rotation</h2>
+  <div class="en-name">Multiply the moduli, add the angles</div>
+  <span class="tag">Geometry · Algebra</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>You already know the geometry of real multiplication: times $2$ stretches by double, times $-1$ "flips to the opposite side." But look again at "flipping to the opposite side" — it is really <strong>a rotation by 180°</strong>. So a 90° rotation is multiplication by which number? Squaring it should equal a "180° turn," i.e. equal $-1$. <strong>The number whose square is $-1$ is exactly $i$.</strong> So $i^2=-1$ stops being mysterious: rotate by 90° twice and you have rotated 180° — a flip — which is times $-1$. The whole secret of complex multiplication is one phrase: <strong>multiply the moduli, add the angles.</strong></p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+      <line x1="20" y1="150" x2="300" y2="150" stroke="#aaa" stroke-width="0.8"/>
+      <line x1="60" y1="20" x2="60" y2="185" stroke="#aaa" stroke-width="0.8"/>
+      <line x1="60" y1="150" x2="150" y2="120" stroke="#3a6088" stroke-width="2"/>
+      <text x="118" y="128" font-size="10" fill="#3a6088" font-style="italic">z₁ (θ₁)</text>
+      <line x1="60" y1="150" x2="135" y2="95" stroke="#7a9a6a" stroke-width="2"/>
+      <text x="98" y="92" font-size="10" fill="#5a7a4a" font-style="italic">z₂ (θ₂)</text>
+      <line x1="60" y1="150" x2="245" y2="48" stroke="#c9544a" stroke-width="2.2"/>
+      <circle cx="245" cy="48" r="3.5" fill="#c9544a"/>
+      <text x="208" y="46" font-size="10" fill="#c9544a" font-style="italic">z₁·z₂</text>
+      <text x="150" y="178" font-size="9.5" fill="#666">lengths multiply, angles θ₁+θ₂ add</text>
+    </svg>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal Definition</div>
+    <div class="formula-box">$$\big(r_1 e^{i\theta_1}\big)\big(r_2 e^{i\theta_2}\big) = r_1 r_2\, e^{i(\theta_1+\theta_2)}$$</div>
+    <p>Multiplying two complex numbers: the lengths (moduli $r$) multiply, the directions (arguments $\theta$) add. Multiplication $=$ scaling $+$ rotation, one operation bundling two geometric acts.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why It's Beautiful</div>
+    <p>"Multiplication" is arithmetic, "rotation" is geometry — complex numbers make them one and the same, filling in the gap between algebra and geometry. Many results that once required grinding through trig identities now come almost for free: expand both sides of $e^{i(\alpha+\beta)}=e^{i\alpha}e^{i\beta}$ and the <strong>angle-addition formulas</strong> for $\cos(\alpha+\beta)$ and $\sin(\alpha+\beta)$ drop out in one line. De Moivre's theorem, likewise.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>2D rotation in computer graphics is just multiplying by a unit complex number. Its three-dimensional cousin, the <strong>quaternion</strong>, is standard in game engines, robot pose, drone flight control, and spacecraft attitude — cheaper and steadier than rotation matrices, and free of "gimbal lock." The phase rotations in digital modulation/demodulation are the same trick.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">In One Line</div>
+    <div class="essence">Multiplication doesn't just scale — it can also turn.</div>
+    <div class="label" style="margin-top:14px">Question</div>
+    <div class="think">Why does 3D rotation need four-dimensional quaternions, with no "triple numbers" in between? Hamilton agonized over this for ten years. Hint: think about which properties multiplication must keep, and which one it is forced to sacrifice.</div>
+  </div>
+</div>
+
+<!-- Concept 4: Why QM Needs Complex Numbers -->
+<div class="card">
+  <h2>Why Quantum Mechanics Needs Complex Numbers</h2>
+  <div class="en-name">Complex numbers as physical necessity</div>
+  <span class="tag">Mathematical Physics</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>Classical physics gets by with real numbers: position, velocity, temperature are all real. But in the quantum world a particle's state is <strong>complex</strong> — a so-called <strong>probability amplitude</strong>. Why insist on complex numbers; why won't real probabilities do? Because quantum states <strong>interfere</strong>: the amplitudes of two paths add like water waves, sometimes reinforcing (brighter), sometimes cancelling (darker). Adding real numbers only ever grows the total; to express "cancellation" you need a phase — and phase is exactly the argument of a complex number. <strong>The ability to cancel is innate to complex numbers.</strong></p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg">
+      <text x="80" y="18" font-size="10" fill="#3a6088" text-anchor="middle">in phase → reinforce</text>
+      <line x1="10" y1="55" x2="150" y2="55" stroke="#ccc" stroke-width="0.6"/>
+      <path d="M 10 55 Q 27 30 45 55 T 80 55 T 115 55 T 150 55" fill="none" stroke="#3a6088" stroke-width="1.3"/>
+      <path d="M 10 55 Q 27 32 45 55 T 80 55 T 115 55 T 150 55" fill="none" stroke="#7a9a6a" stroke-width="1.3"/>
+      <path d="M 10 90 Q 27 38 45 90 T 80 90 T 115 90 T 150 90" fill="none" stroke="#c9544a" stroke-width="2"/>
+      <text x="80" y="108" font-size="9" fill="#c9544a" text-anchor="middle">sum: amplitude doubles</text>
+      <text x="265" y="18" font-size="10" fill="#3a6088" text-anchor="middle">out of phase → cancel</text>
+      <line x1="190" y1="55" x2="330" y2="55" stroke="#ccc" stroke-width="0.6"/>
+      <path d="M 190 55 Q 207 30 225 55 T 260 55 T 295 55 T 330 55" fill="none" stroke="#3a6088" stroke-width="1.3"/>
+      <path d="M 190 55 Q 207 80 225 55 T 260 55 T 295 55 T 330 55" fill="none" stroke="#7a9a6a" stroke-width="1.3"/>
+      <line x1="190" y1="90" x2="330" y2="90" stroke="#c9544a" stroke-width="2"/>
+      <text x="260" y="108" font-size="9" fill="#c9544a" text-anchor="middle">sum: falls silent</text>
+    </svg>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal Definition</div>
+    <div class="formula-box">$$P = |\psi|^2, \qquad i\hbar\frac{\partial \psi}{\partial t} = \hat{H}\psi$$</div>
+    <p>The wavefunction $\psi$ is complex-valued; the only probability $P$ we ever observe is its <strong>squared modulus</strong>. When two paths superpose, $\psi=\psi_1+\psi_2$, expanding $|\psi|^2$ throws off a cross "interference term." That $i$ on the left of the Schrödinger equation cannot be removed — it is the skeleton of the equation.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why It's Beautiful</div>
+    <p>Here complex numbers are no longer a "convenient computational trick" but a <strong>physical necessity</strong>. In 2021, several experimental teams, building on a generalized Bell inequality, proved that a real-number-only quantum mechanics cannot reproduce real observations — nature "rejected" the real version. A number that Cardano treated as a monster in the 16th century, branded "imaginary," turns out to be the writing language of the universe's deepest layer. It is the ultimate case of mathematics "invented from nothing" yet striking physical reality dead-on.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>The foundation of all quantum technology. A qubit's state is a complex vector; quantum gates are <strong>unitary transformations</strong> — modulus-preserving "high-dimensional rotations." Quantum computing, quantum chemistry, lasers, semiconductors are all built on complex numbers. Machine learning even has complex-valued neural networks, built to handle audio, radar, and MRI signals that carry phase by nature.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">In One Line</div>
+    <div class="essence">At its deepest layer, nature writes in complex numbers.</div>
+    <div class="label" style="margin-top:14px">Question</div>
+    <div class="think">If complex numbers are indispensable to physics, are they still "imaginary"? Is mathematics a human invention, or the discovery of structure that already exists? Complex numbers stand right at the center of this millennia-old debate.</div>
+  </div>
+</div>
+
+<!-- Going Deeper -->
+<div class="card">
+  <h2>Going Deeper</h2>
+  <div class="en-name">Pushing the concepts to their edge</div>
+
+  <details>
+    <summary>1. The complex field is already algebraically closed — so why keep extending the number system? And what do quaternions and octonions pay for it?</summary>
+    <div>Hurwitz's theorem proves that normed division algebras exist only in dimensions 1, 2, 4, 8 (reals, complex, quaternions, octonions). Each doubling of dimension sacrifices an arithmetic law — quaternions lose commutativity of multiplication, octonions lose even associativity. The complex numbers are the unique extension that is both algebraically closed and keeps every familiar rule intact — sitting on a singular sweet spot.</div>
+  </details>
+
+  <details>
+    <summary>2. Unit complex numbers $e^{i\theta}$ form the $U(1)$ group — the simplest continuous symmetry. Why is electromagnetism's gauge symmetry also exactly $U(1)$?</summary>
+    <div>Electromagnetism's gauge symmetry is precisely $U(1)$: the wavefunction at each point may be multiplied by a local phase $e^{i\theta(x)}$ with no change to physics. Demanding that local phase freedom mathematically "forces" the electromagnetic field into existence; Noether's theorem then ties this symmetry to charge conservation. That little circle of complex numbers is the mother of light and electricity.</div>
+  </details>
+
+  <details>
+    <summary>3. The Riemann zeta function lives on the complex plane, and the Riemann Hypothesis concerns its complex zeros. Why does the secret of the primes only become visible in the complex domain?</summary>
+    <div>Primes are defined on the integers — the most "real" of objects. Yet once zeta is continued to the complex plane, the locations of its complex zeros precisely encode the fluctuations in prime distribution — the imaginary parts of the zeros correspond to "frequencies" in the prime-counting function. Another case of "the shortest path between real truths passing through the complex domain" (Hadamard): the rigidity of complex analysis hands us tools the real world cannot reach.</div>
+  </details>
+
+  <details>
+    <summary>4. Complex-differentiable (holomorphic) functions have an eerie "rigidity": differentiable once on a small region, and they are automatically infinitely differentiable. Where does that come from?</summary>
+    <div>Complex differentiability demands that the limit agree when approached from "any direction" in the plane — far stronger than real differentiability (the Cauchy–Riemann equations). The consequences are astonishing: holomorphic functions are analytic, are uniquely determined by their boundary values (Cauchy's integral formula), and have isolated zeros. The "freedom" of one dimension is geometrically locked down in two — the very root of why complex analysis is both beautiful and powerful.</div>
+  </details>
+
+  <details>
+    <summary>5. The cochlea breaks sound into frequencies in real time — essentially a biological Fourier transform. Does the brain keep the complex numbers (with phase), or only the amplitude?</summary>
+    <div>The cochlea's basilar membrane resonates by frequency, so it really does perform spectral decomposition. But neural firing mainly encodes amplitude (loudness) and frequency, while absolute phase is largely discarded — which is why we are insensitive to absolute phase yet exquisitely sensitive to pitch. Intriguingly, the interaural phase difference (ITD) is precisely preserved, used to localize sound sources. Biology keeps only the slice of "complex information" it actually needs.</div>
+  </details>
+</div>
+
+<nav class="bottom">
+  <a href="index.en.html">← Back to Mathematics Weekly</a>
+</nav>
+
+</div>
+</body>
+</html>
