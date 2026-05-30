@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Beauty of Number Theory · Week 6 — Mathematics Weekly</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Georgia,"Computer Modern","Noto Serif SC",serif;background:#f5f7fa;color:#1a1f2e;line-height:1.85}
+.container{max-width:780px;margin:0 auto;padding:24px 22px 64px}
+header{text-align:center;padding:52px 0 36px;border-bottom:1px solid #c0c8d4;margin-bottom:36px}
+header .kicker{font-size:0.82rem;letter-spacing:4px;color:#3a6088;text-transform:uppercase;margin-bottom:14px}
+header h1{font-size:2.2rem;font-weight:800;color:#1e3a5f;font-family:"Times New Roman",Georgia,serif;font-style:italic;letter-spacing:1px}
+header .meta{margin-top:14px;font-size:0.92rem;color:#5a7090}
+header .epigraph{margin-top:22px;font-size:0.95rem;color:#5a7090;font-style:italic;max-width:560px;margin-left:auto;margin-right:auto;padding:0 16px;border-left:2px solid #c0c8d4;border-right:2px solid #c0c8d4}
+.card{background:#fff;border-radius:8px;padding:32px 30px;margin-bottom:28px;box-shadow:0 2px 14px rgba(30,58,95,0.07);border-top:3px solid #3a6088}
+.card h2{font-size:1.45rem;color:#1e3a5f;font-family:"Times New Roman",Georgia,serif;margin-bottom:4px;font-weight:700}
+.card .en-name{font-size:0.95rem;color:#5a7090;font-style:italic;margin-bottom:10px}
+.tag{display:inline-block;background:#e6ecf3;color:#3a6088;font-size:0.72rem;padding:3px 10px;border-radius:12px;letter-spacing:1px;margin-bottom:18px;text-transform:uppercase}
+.section{margin-top:18px}
+.section .label{font-size:0.78rem;color:#3a6088;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.section .label::before{content:"";display:inline-block;width:14px;height:1px;background:#3a6088}
+.section p{font-size:1rem;color:#2a3548}
+.section ul{margin-top:4px;padding-left:22px}
+.section ul li{margin-bottom:4px}
+.formula-box{background:#f0f4f9;border-left:3px solid #1e3a5f;padding:18px 22px;margin:14px 0;font-size:1.1rem;color:#1e3a5f;text-align:center;overflow-x:auto}
+.intuition{background:#fbfaf3;border-left:3px solid #c9a96b;padding:14px 18px;margin-top:6px;font-style:italic;color:#3d3520}
+.viz{display:flex;justify-content:center;margin:22px 0;padding:18px;background:#fafbfd;border-radius:6px}
+.viz svg{max-width:100%;height:auto}
+.quote{font-style:italic;color:#5a7090;border-left:2px solid #c0c8d4;padding-left:14px;margin:14px 0;font-size:0.95rem}
+.essence{background:#fbfaf3;border-left:3px solid #c9a96b;padding:12px 18px;margin-top:6px;color:#3d3520;font-weight:600}
+.think{background:#eef2f6;padding:14px 18px;border-radius:4px;font-size:0.96rem;color:#2a3548;margin-top:6px;border-left:3px solid #1e3a5f}
+details{background:#eef2f6;border-radius:4px;padding:12px 18px;margin-bottom:12px;border-left:3px solid #3a6088}
+details summary{cursor:pointer;font-weight:600;color:#1e3a5f}
+details div{margin-top:10px;font-size:0.95rem;color:#2a3548}
+nav.bottom{text-align:center;margin-top:40px;padding-top:24px;border-top:1px solid #c0c8d4}
+nav.bottom a{color:#3a6088;text-decoration:none;font-size:0.95rem;font-style:italic}
+nav.bottom a:hover{color:#1e3a5f}
+@media(max-width:600px){.container{padding:16px 14px 40px}header h1{font-size:1.55rem}.card{padding:24px 18px}.card h2{font-size:1.2rem}.formula-box{font-size:0.95rem;padding:14px 12px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="kicker">Week 6 · 2026.06.05</div>
+  <h1>The Beauty of Number Theory</h1>
+  <div class="meta">In the deepest layer of the integers hides the strangest order</div>
+  <div class="epigraph">"God may not play dice with the universe, but something strange is going on with the prime numbers." — Paul Erdős</div>
+</header>
+
+<!-- Concept 1: Prime distribution -->
+<div class="card">
+  <h2>The Prime Number Theorem</h2>
+  <div class="en-name">A Logarithmic Curve Beneath the Chaos</div>
+  <span class="tag">Analytic Number Theory</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>Primes are $2,3,5,7,11,13,17,\dots$—integers divisible only by $1$ and themselves. As you walk up the number line they thin out, but with no obvious pattern: two consecutive primes might differ by $2$ (twins), or be separated by an arbitrarily long "desert."<br><br>The striking fact is this: <strong>locally chaotic, globally law-abiding.</strong> Near $N$, a random integer is prime with probability roughly $1/\ln N$. So a random 100-digit integer is prime with chance $\approx 1/230$; a 1000-digit one with $\approx 1/2300$. Primes scatter like salt—individual grains unpredictable, density tightly controlled by a logarithmic law.</p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="170" x2="340" y2="170" stroke="#aaa" stroke-width="0.8"/>
+      <line x1="40" y1="20" x2="40" y2="180" stroke="#aaa" stroke-width="0.8"/>
+      <text x="338" y="186" font-size="10" fill="#666" text-anchor="end">N</text>
+      <text x="46" y="30" font-size="10" fill="#666">π(N)</text>
+      <path d="M 40 170 Q 120 145 200 100 T 330 35" fill="none" stroke="#3a6088" stroke-width="2"/>
+      <text x="280" y="60" font-size="10" fill="#3a6088" font-style="italic">N / ln N</text>
+      <path d="M 40 170 L 60 165 L 75 162 L 90 155 L 110 150 L 130 142 L 150 132 L 170 121 L 190 108 L 215 92 L 240 75 L 270 60 L 300 47 L 330 38" fill="none" stroke="#c9544a" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text x="200" y="155" font-size="10" fill="#c9544a" font-style="italic">actual π(N)</text>
+    </svg>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal Definition</div>
+    <div class="formula-box">$$\pi(N) \sim \frac{N}{\ln N}, \quad N\to\infty$$</div>
+    <p>$\pi(N)$ counts primes up to $N$; $\sim$ means "the ratio tends to $1$." Equivalently, the $n$-th prime $p_n \approx n\ln n$. A sharper approximation is the logarithmic integral $\mathrm{Li}(N)=\int_2^N\!dt/\ln t$, whose error is an order of magnitude smaller.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why It's Beautiful</div>
+    <p>The 15-year-old Gauss guessed this law while counting primes by hand in logarithm tables. Yet it took until 1896—Hadamard and de la Vallée Poussin—to prove it, and their proofs detoured through <strong>complex analysis</strong>. A theorem about integers (the most discrete objects) demanded a tour into the complex plane to land. This "the shortest road through a real problem runs through complex numbers" is the signature of number theory.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>RSA and elliptic-curve cryptography rest on it directly: to generate a random 2048-bit prime you average about $2048\cdot\ln 2\approx 1400$ candidates—which is why banks can mint keys in seconds. Hash-table bucket counts are often chosen prime to scatter collisions; cicada life cycles of 13 and 17 years are likely an evolutionary trick to dodge predator periods. The integral $\mathrm{Li}(N)$ also appears in probabilistic heuristics that estimate prime randomness.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Essence</div>
+    <div class="essence">Each grain is unpredictable; the total density is exactly computable—primes are the prototype of "locally random, globally ordered."</div>
+    <div class="label" style="margin-top:14px">Question</div>
+    <div class="think">PNT gives the mean; actual $\pi(N)$ oscillates around it. What does this "average law plus local fluctuation" picture share with tail latency in load-balanced distributed systems? Are both "mean looks great, tails kill you"?</div>
+  </div>
+</div>
+
+<!-- Concept 2: Riemann Hypothesis -->
+<div class="card">
+  <h2>The Riemann Hypothesis</h2>
+  <div class="en-name">The Sheet Music of Prime Fluctuations</div>
+  <span class="tag">Analytic Number Theory</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>PNT tells us the main melody of the primes is $N/\ln N$, but $\pi(N)$ jitters around it. In 1859 Riemann translated this jitter into "harmony": every non-trivial zero $\rho$ of $\zeta(s)$ behaves like a frequency, and stacking them recovers the entire fluctuation of the prime count.<br><br><strong>The hypothesis says: every one of those frequencies has real part exactly $\tfrac{1}{2}$.</strong> Every voice is aligned at the same volume—no single zero gets to dominate. It is the deepest possible kind of balance. Break that balance and primes would swing far more wildly than they actually do.</p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg">
+      <line x1="20" y1="100" x2="320" y2="100" stroke="#aaa" stroke-width="0.7"/>
+      <line x1="170" y1="20" x2="170" y2="180" stroke="#aaa" stroke-width="0.7"/>
+      <text x="316" y="116" font-size="10" fill="#666" text-anchor="end">Re</text>
+      <text x="176" y="30" font-size="10" fill="#666">Im</text>
+      <line x1="210" y1="20" x2="210" y2="180" stroke="#c9544a" stroke-width="1.2" stroke-dasharray="4,3"/>
+      <text x="216" y="32" font-size="10" fill="#c9544a" font-style="italic">Re = 1/2</text>
+      <circle cx="210" cy="55" r="3" fill="#c9544a"/>
+      <circle cx="210" cy="75" r="3" fill="#c9544a"/>
+      <circle cx="210" cy="125" r="3" fill="#c9544a"/>
+      <circle cx="210" cy="145" r="3" fill="#c9544a"/>
+      <circle cx="210" cy="165" r="3" fill="#c9544a"/>
+      <text x="225" y="58" font-size="9" fill="#666" font-style="italic">14.13i</text>
+      <text x="225" y="78" font-size="9" fill="#666" font-style="italic">21.02i</text>
+      <text x="225" y="148" font-size="9" fill="#666" font-style="italic">−21.02i</text>
+      <circle cx="90" cy="100" r="2.5" fill="#7a9a6a"/>
+      <circle cx="50" cy="100" r="2.5" fill="#7a9a6a"/>
+      <text x="40" y="92" font-size="9" fill="#5a7a4a">−4</text>
+      <text x="80" y="92" font-size="9" fill="#5a7a4a">−2</text>
+      <text x="70" y="190" font-size="9" fill="#5a7a4a" text-anchor="middle">trivial zeros</text>
+    </svg>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal Definition</div>
+    <div class="formula-box">$$\zeta(s)=\sum_{n=1}^\infty \frac{1}{n^s}=\prod_{p\text{ prime}}\frac{1}{1-p^{-s}}$$</div>
+    <p>The left side sums over all integers; the right side multiplies over all primes—Euler's discovery that they agree. This identity packs all information about primes into a single function. After analytically continuing $\zeta$ to the entire complex plane, <strong>the hypothesis claims: apart from the "trivial" zeros at $s=-2,-4,\dots$, every zero lies on the critical line $\mathrm{Re}(s)=\tfrac{1}{2}$.</strong> Their imaginary parts are the "frequencies" driving the prime fluctuations.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why It's Beautiful</div>
+    <p>If RH holds, the error in $\pi(N)$ is locked inside $O(\sqrt{N}\ln N)$—the strongest bound conceivable. The order of the integers (most discrete) is hidden inside the zero geometry of a complex function (most continuous). Even stranger, Montgomery and Dyson noticed in 1972 that the spacing statistics of $\zeta$ zeros match the eigenvalues of a <strong>random Hermitian matrix</strong>—the same distribution that describes nuclear energy levels. Primes, random matrices, atomic nuclei: three unrelated worlds pointing at the same hidden structure.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>Few direct engineering uses, but $>$1000 theorems in analytic number theory are conditional on RH. Berry and Keating conjectured that $\zeta$ zeros are eigenvalues of an unknown "Riemann operator"—if so, primes connect to quantum chaos. The Clay Math Institute offers $1M; 105 years and counting. In ML, researchers use $\zeta$-zero fitting as a benchmark for "extremely hard" functions to approximate.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Essence</div>
+    <div class="essence">The order of the integers is locked onto a single thin line in the complex plane.</div>
+    <div class="label" style="margin-top:14px">Question</div>
+    <div class="think">The first $10^{13}$ zeros all lie on the critical line. Is that "evidence"? How far can empirical induction go in mathematics? Physicists accept a theory based on agreement with experiment—why don't mathematicians?</div>
+  </div>
+</div>
+
+<!-- Concept 3: RSA -->
+<div class="card">
+  <h2>RSA Cryptography</h2>
+  <div class="en-name">Putting Trust on an Open Network</div>
+  <span class="tag">Algorithmic Number Theory · Cryptography</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>Cryptography's most awkward problem: how do you mail someone a key without anyone intercepting it? RSA gives a counter-intuitive answer—<strong>use two different keys.</strong> The public key is broadcast to everyone; the private key stays with you. Anyone can lock with the public key, but only the private one can unlock. It's as if everyone leaves an open padlock on the table; whoever wants to send you a letter grabs one of your padlocks and locks a box; only you, with the key in your drawer at home, can open it.<br><br>The whole security argument is a single sentence: <strong>multiplying two 1024-bit primes is instant, but factoring the product back into those primes has no known efficient algorithm.</strong> Milliseconds forward, billions of years backward—this asymmetric gulf holds up the entire trust layer of the internet.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal Definition</div>
+    <div class="formula-box">$$c \equiv m^{e} \pmod{N}, \qquad m \equiv c^{d} \pmod{N}$$</div>
+    <p>Pick large primes $p,q$; set $N=pq$, $\varphi(N)=(p-1)(q-1)$. Choose $e$ coprime to $\varphi(N)$, then compute $d$ with $ed\equiv 1\pmod{\varphi(N)}$. Public key: $(N,e)$; private key: $d$. Correctness rests on <strong>Euler's theorem</strong> $m^{\varphi(N)}\equiv 1\pmod{N}$; security rests on: without $p,q$ you can't compute $\varphi(N)$, hence can't compute $d$.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why It's Beautiful</div>
+    <p>Fermat's little theorem (1640) and Euler's theorem (1736) were "art for art's sake" toys of pure number theory; for centuries nobody imagined any use. In 1977 Rivest, Shamir, and Adleman assembled them into a protocol that today guards billions of HTTPS handshakes per second. In 1940 Hardy proudly wrote that "number theory will never be used in war"—RSA is the most elegant refutation of that line. <strong>The distance from pure to applied may be only a generation or two.</strong></p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>HTTPS, SSH, TLS handshakes, email signing, iMessage, Bitcoin transaction signatures, SIM authentication—every https page you open today triggers a modular exponentiation. Once Shor's algorithm runs on a real quantum machine, RSA collapses; NIST is now standardizing lattice-, code-, and hash-based post-quantum schemes. But the core paradigm—a "trapdoor": easy forward, hard backward—survives.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Essence</div>
+    <div class="essence">A single asymmetric arithmetic gap holds up the entire trust layer of the internet age.</div>
+    <div class="label" style="margin-top:14px">Question</div>
+    <div class="think">The 1977 inventors had no way of foreseeing quantum attacks 50 years out. When you design a system whose lifetime depends on the hardness of some math problem, how do you estimate how long that hardness will last? Could AI itself someday "learn" a new class of supposedly hard problems?</div>
+  </div>
+</div>
+
+<!-- Concept 4: Fermat's Last Theorem -->
+<div class="card">
+  <h2>Fermat's Last Theorem</h2>
+  <div class="en-name">A Margin Note That Moved Three Centuries</div>
+  <span class="tag">Number Theory · Arithmetic Geometry</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>For $n=2$, $a^2+b^2=c^2$ has infinitely many integer solutions ($3\text{-}4\text{-}5$, $5\text{-}12\text{-}13$, …)—the Pythagorean triples. <strong>In 1637 Fermat scribbled in the margin of his copy of Diophantus: for $n\ge 3$, $a^n+b^n=c^n$ has no positive integer solutions. "I have discovered a truly marvellous proof, which this margin is too narrow to contain."</strong> That note kept mathematicians chasing for 358 years.<br><br>On the surface, a statement a schoolchild can read; underneath, the whole of 20th-century algebraic number theory. Every failed attempt accidentally birthed new tools—ideal numbers, class groups, $p$-adic numbers, modular forms, elliptic curves—whose combined value far outshines the theorem itself.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal Definition</div>
+    <div class="formula-box">$$\forall n\ge 3,\quad a^n+b^n=c^n\ \text{has no solutions in}\ a,b,c\in\mathbb{Z}^+$$</div>
+    <p>Wiles' 1994 proof goes: assume a solution exists $\Rightarrow$ build a "Frey elliptic curve" from it $\Rightarrow$ show this curve has impossible properties, contradicting the modularity theorem (every semistable elliptic curve corresponds to a modular form) $\Rightarrow$ contradiction. <strong>Fermat's integer equation gets translated into a geometric statement about what shapes of curves can exist.</strong></p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why It's Beautiful</div>
+    <p>The original statement uses only integers, but the proof traveled through Galois representations, modular forms, and elliptic curves at the highest altitude—exactly Grothendieck's "lift to a higher dimension to solve": the frontal assault is impossible, but a geometric detour wins. Wiles worked in his attic for seven years (1986–1993), then spent another year (with Taylor) fixing a gap reviewers found. A margin joke ultimately forced humanity into a complete understanding of elliptic curves—that is FLT's real legacy.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>FLT itself has no "daily use," but the elliptic curves it forced into the light are now the heart of modern cryptography (ECC, ECDSA, Bitcoin signatures)—the secure chip in your phone calls them hundreds of times a day. Frey's move of "translate a number theory problem into a geometric one" is also a prototype of the <strong>Langlands program</strong>—the 21st-century blueprint stitching number theory, representation theory, and geometry into one fabric. FLT's by-products dwarf FLT itself.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Essence</div>
+    <div class="essence">A margin-note joke moved three centuries and an entire discipline.</div>
+    <div class="label" style="margin-top:14px">Question</div>
+    <div class="think">Most historians think Fermat did not actually possess that proof (or, if he did, it was wrong). Yet that "perhaps non-existent" proof shaped 350 years of mathematics. Can an unsolved problem, as a giant objective function, be more valuable to a discipline than a solved but minor theorem?</div>
+  </div>
+</div>
+
+<!-- Going Deeper -->
+<div class="card">
+  <h2>Going Deeper</h2>
+  <div class="en-name">Pushing the Concepts to Their Edges</div>
+
+  <details>
+    <summary>1. Twin primes, Goldbach, Riemann—all are conjectures about how primes distribute. Why is this whole class so hard?</summary>
+    <div>Primes are defined <em>negatively</em>—not divisible by any smaller prime. That "non-" definition is fundamentally hostile to continuous tools: you cannot smooth, differentiate, or Fourier-transform a set defined by exclusion. Erdős: "God may not play dice, but something strange is going on with the primes." In 2013 Yitang Zhang showed there are infinitely many prime pairs with gap $<$ 70 million; Polymath pushed it to 246—but the gap of $2$ (twin primes) remains out of reach.</div>
+  </details>
+
+  <details>
+    <summary>2. RSA's security is empirical—nobody can factor, but nobody has proved nobody can. Is internet cryptography built on sand?</summary>
+    <div>Essentially yes. All asymmetric cryptography bets on "$P\ne NP$, plus specific problems (factoring, discrete log, shortest vector, …) being hard." Post-quantum cryptography swaps the problem but does not remove the assumption. Bernstein: "Cryptographers offer attackers the toughest bone they can find—not mathematical proof." Engineering-wise, that's acceptable; philosophically, the entire trust stack of digital civilization rests on unproven hardness.</div>
+  </details>
+
+  <details>
+    <summary>3. Wiles' proof is viewed as the first triumph of the Langlands program. Could Langlands become the "general relativity" of 21st-century mathematics?</summary>
+    <div>Langlands himself called it "highly conjectural" in his 1967 letter. Wiles' "Galois representation $\leftrightarrow$ automorphic form" correspondence is the smallest case of it. More recently Kapustin–Witten tied <em>geometric</em> Langlands to string theory and mirror symmetry—a faint outline of a "math–physics grand unification" is forming. If it holds, number theory, representation theory, and quantum field theory will share one grammar.</div>
+  </details>
+
+  <details>
+    <summary>4. What if the Riemann Hypothesis is disproved instead?</summary>
+    <div>Disproof would mean finding a non-trivial zero off the line $\mathrm{Re}=1/2$—implying that prime counts swing far more violently than expected. Cryptographic heuristics that assume "uniform prime distribution" would need re-examination; a thousand-plus "conditional on RH" theorems would all need new proofs. But the deeper shock is philosophical: it would force mathematicians to admit that the gap between "collective intuition" and "actually true" is wider than they thought.</div>
+  </details>
+
+  <details>
+    <summary>5. Neural nets are great at fitting continuous functions. Could one learn the primes?</summary>
+    <div>Empirically a plain MLP trained to predict "the $n$-th prime" generalizes terribly—primes have no smooth local structure, so gradients have nowhere to descend. Switching the task to "is this bit-string prime?" with $\mod p$ algebraic features can lift accuracy close to classical sieves. The lesson is sharp: <strong>which problems can be "continuized" for deep learning and which resist by their very discreteness is itself a yardstick for AI's reach.</strong> The primes are one of the sharpest such yardsticks we have.</div>
+  </details>
+</div>
+
+<nav class="bottom">
+  <a href="index.en.html">← back to Mathematics Weekly</a>
+</nav>
+
+</div>
+</body>
+</html>
