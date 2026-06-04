@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Combinatorics · Day 7 — Mathematics Daily</title>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+};
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Georgia,"Computer Modern","Noto Serif SC",serif;background:#f5f7fa;color:#1a1f2e;line-height:1.85}
+.container{max-width:780px;margin:0 auto;padding:24px 22px 64px}
+header{text-align:center;padding:52px 0 36px;border-bottom:1px solid #c0c8d4;margin-bottom:36px}
+header .kicker{font-size:0.82rem;letter-spacing:4px;color:#3a6088;text-transform:uppercase;margin-bottom:14px}
+header h1{font-size:2.2rem;font-weight:800;color:#1e3a5f;font-family:"Times New Roman",Georgia,serif;font-style:italic;letter-spacing:1px}
+header .meta{margin-top:14px;font-size:0.92rem;color:#5a7090}
+header .epigraph{margin-top:22px;font-size:0.95rem;color:#5a7090;font-style:italic;max-width:560px;margin-left:auto;margin-right:auto;padding:0 16px;border-left:2px solid #c0c8d4;border-right:2px solid #c0c8d4}
+.card{background:#fff;border-radius:8px;padding:32px 30px;margin-bottom:28px;box-shadow:0 2px 14px rgba(30,58,95,0.07);border-top:3px solid #3a6088}
+.card h2{font-size:1.45rem;color:#1e3a5f;font-family:"Times New Roman",Georgia,serif;margin-bottom:4px;font-weight:700}
+.card .en-name{font-size:0.95rem;color:#5a7090;font-style:italic;margin-bottom:10px}
+.tag{display:inline-block;background:#e6ecf3;color:#3a6088;font-size:0.72rem;padding:3px 10px;border-radius:12px;letter-spacing:1px;margin-bottom:18px;text-transform:uppercase}
+.section{margin-top:18px}
+.section .label{font-size:0.78rem;color:#3a6088;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.section .label::before{content:"";display:inline-block;width:14px;height:1px;background:#3a6088}
+.section p{font-size:1rem;color:#2a3548}
+.section ul{margin-top:4px;padding-left:22px}
+.section ul li{margin-bottom:4px}
+.formula-box{background:#f0f4f9;border-left:3px solid #1e3a5f;padding:18px 22px;margin:14px 0;font-size:1.1rem;color:#1e3a5f;text-align:center;overflow-x:auto}
+.intuition{background:#fbfaf3;border-left:3px solid #c9a96b;padding:14px 18px;margin-top:6px;font-style:italic;color:#3d3520}
+.viz{display:flex;justify-content:center;margin:22px 0;padding:18px;background:#fafbfd;border-radius:6px}
+.viz svg{max-width:100%;height:auto}
+.essence{background:#eef2f6;padding:14px 18px;border-radius:4px;font-size:0.98rem;color:#1e3a5f;margin-top:6px;border-left:3px solid #1e3a5f}
+.think{background:#fbfaf3;padding:14px 18px;border-radius:4px;font-size:0.96rem;color:#3d3520;margin-top:10px;border-left:3px solid #c9a96b}
+details{margin-top:14px;background:#fff;border-radius:6px;padding:4px 18px;box-shadow:0 1px 8px rgba(30,58,95,0.06)}
+summary{cursor:pointer;font-weight:700;color:#1e3a5f;padding:12px 0;font-size:0.98rem}
+details div{padding:0 0 14px;font-size:0.95rem;color:#2a3548}
+nav.bottom{text-align:center;margin-top:40px;padding-top:24px;border-top:1px solid #c0c8d4}
+nav.bottom a{color:#3a6088;text-decoration:none;font-size:0.95rem;font-style:italic}
+nav.bottom a:hover{color:#1e3a5f}
+.foot-h{text-align:center;font-size:0.82rem;letter-spacing:3px;color:#3a6088;text-transform:uppercase;margin:40px 0 8px}
+@media(max-width:600px){.container{padding:16px 14px 40px}header h1{font-size:1.55rem}.card{padding:24px 18px}.card h2{font-size:1.2rem}.formula-box{font-size:0.95rem;padding:14px 12px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="kicker">Day 7 · 2026.06.04</div>
+  <h1>Combinatorics</h1>
+  <div class="meta">The Art of Counting — when "counting carefully" becomes a deep discipline</div>
+  <div class="epigraph">"Combinatorics is the poetry of discrete structure: it asks not 'how large?' but 'how many possibilities?'"</div>
+</header>
+
+<!-- Concept 1: Permutations & Combinations -->
+<div class="card">
+  <h2>Permutations &amp; Combinations</h2>
+  <div class="en-name">Two basic postures of counting</div>
+  <span class="tag">Enumerative</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>Picking 3 people out of 5 has two different questions with two different answers. <strong>"Lining them up" cares about order</strong>—A first vs. B first are distinct outcomes; <strong>"forming a group" ignores order</strong>—as long as the three are present, who came first doesn't matter. That is the entire distinction: <em>does order count?</em><br><br>How do we get from permutations to combinations? Each 3-person group can be arranged in $3!=6$ orderings, and a combination treats all 6 as one. So <strong>combinations = permutations ÷ the redundancy factor</strong>. This "over-count, then divide out the symmetry" move is the core technique of all of counting (<em>over-count then divide</em>); you will meet it again and again in group theory, probability, and statistical physics.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal definition</div>
+    <div class="formula-box">$$P(n,k)=\frac{n!}{(n-k)!}\qquad \binom{n}{k}=\frac{n!}{k!\,(n-k)!}$$</div>
+    <p>$n!$ (n factorial) is the number of ways to line up $n$ objects. $P(n,k)$ arranges the first $k$, so we divide out the $(n-k)!$ ways the rest could sit. The combination $\binom{n}{k}$ ("n choose k") additionally divides out the $k!$ internal orderings of the group. Three factorials, for three layers of symmetry: "everyone / the unchosen / the chosen but order-blind."</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why it's beautiful</div>
+    <p>Arrange the binomial coefficients into a triangle—<strong>Pascal's triangle</strong>—and each number is exactly the sum of the two above it. The recurrence $\binom{n}{k}=\binom{n-1}{k-1}+\binom{n-1}{k}$ has a luminous reading: "include element $n$ or not" slices every selection into two classes. More striking is the symmetry $\binom{n}{k}=\binom{n}{n-k}$ (choosing $k$ = discarding $n-k$), and the fact that these are the expansion coefficients of $(a+b)^n$—<strong>a pure "distribute the objects" counting problem grows an entire algebra</strong>. The same truth shows itself in three languages: recurrence, symmetry, binomial theorem.</p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 360 175" xmlns="http://www.w3.org/2000/svg">
+      <g font-family="Georgia,serif" font-size="14" fill="#1e3a5f" text-anchor="middle">
+        <text x="180" y="28">1</text>
+        <text x="150" y="58">1</text><text x="210" y="58">1</text>
+        <text x="120" y="88">1</text><text x="180" y="88">2</text><text x="240" y="88">1</text>
+        <text x="90" y="118">1</text><text x="150" y="118">3</text><text x="210" y="118">3</text><text x="270" y="118">1</text>
+        <text x="60" y="148">1</text><text x="120" y="148">4</text><text x="180" y="148">6</text><text x="240" y="148">4</text><text x="300" y="148">1</text>
+      </g>
+      <g stroke="#c9544a" stroke-width="1.1" fill="none" opacity="0.8">
+        <line x1="156" y1="80" x2="174" y2="98"/><line x1="204" y1="80" x2="186" y2="98"/>
+      </g>
+      <text x="252" y="98" font-size="10" fill="#c9544a" font-style="italic" text-anchor="middle">2 = 1+1</text>
+    </svg>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>The binomial distribution $\binom{n}{k}p^k(1-p)^{n-k}$ rests directly on combinations—exactly $k$ heads in $n$ tosses has $\binom{n}{k}$ paths. Error-correcting codes (e.g. Reed–Muller) use combinatorial counting to fix how many errors they can repair; cryptography leans on the astronomical permutation space $n!$ to make brute force infeasible; in ML, feature crosses and the number of $k$-fold cross-validation splits are combinatorial counts. Even which positions attend to which in multi-head attention is combinatorial structure at work.</p>
+  </div>
+
+  <div class="section">
+    <div class="essence"><strong>In one line:</strong> all the wisdom of counting is "count too much on purpose, then divide out the distinctions you don't care about."</div>
+    <div class="think"><strong>Question:</strong> Why is $\binom{n}{k}$ always an integer? Its definition contains a division by $k!(n-k)!$—what guarantees it divides evenly? (Hint: it counts real, existing groups, and a count can't be a fraction.)</div>
+  </div>
+</div>
+
+<!-- Concept 2: Pigeonhole -->
+<div class="card">
+  <h2>The Pigeonhole Principle</h2>
+  <div class="en-name">The plainest yet sharpest existence argument</div>
+  <span class="tag">Existence</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>Stuff 13 pigeons into 12 holes and <strong>some hole must contain at least 2</strong>. Trivial? It is indeed irrefutable—and precisely because of that, it becomes the strongest lever for proving "something must exist."<br><br>Its power: <em>you can assert existence without ever finding the thing</em>. Beijing has over 20 million people, and no head has more than ~150,000 hairs. Treat people as pigeons and "hair count" as holes—people far outnumber holes, so <strong>two people in Beijing must have exactly the same number of hairs</strong>. We can't name them, yet we're 100% sure they exist. This "certain existence that refuses to point" is combinatorics' most enchanting specialty.</p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 360 120" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#3a6088" stroke-width="1.2" fill="#eef2f6">
+        <rect x="20" y="60" width="60" height="45" rx="3"/>
+        <rect x="100" y="60" width="60" height="45" rx="3"/>
+        <rect x="180" y="60" width="60" height="45" rx="3"/>
+        <rect x="260" y="60" width="60" height="45" rx="3"/>
+      </g>
+      <g fill="#c9544a">
+        <circle cx="40" cy="82" r="7"/>
+        <circle cx="130" cy="82" r="7"/>
+        <circle cx="200" cy="82" r="7"/><circle cx="222" cy="82" r="7"/>
+        <circle cx="290" cy="82" r="7"/>
+      </g>
+      <text x="180" y="28" font-size="13" fill="#1e3a5f" text-anchor="middle" font-style="italic">5 pigeons, 4 holes</text>
+      <text x="211" y="50" font-size="11" fill="#c9544a" text-anchor="middle">↓ one hole ≥ 2</text>
+    </svg>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal definition</div>
+    <p>If $n$ objects go into $m$ boxes with $n>m$, then some box holds at least $\lceil n/m \rceil$ objects ($\lceil\cdot\rceil$ is the ceiling). The proof is one line by contradiction: if <em>every</em> box held at most $\lceil n/m\rceil-1$, the total would be $<n$—contradiction. So simple it barely counts as a proof; that is exactly its elegance.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why it's beautiful</div>
+    <p>It cleanly separates "existence" from "construction." You needn't build the object—just let quantities collide. This idea seeds all of <strong>Ramsey theory</strong>: "in any large enough mess, order must emerge"—e.g. among any 6 people, 3 mutually know each other or 3 are mutual strangers. Chaos cannot be carried out to the end; structure precipitates from sheer scale. A near-philosophical beauty: <em>order isn't arranged, it's forced out by size</em>.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>Hash collisions <strong>must exist</strong>—mapping infinitely many possible keys into finite buckets, pigeonhole guarantees crashes, which is why a hash function can only reduce collisions, never abolish them. Likewise, <strong>lossless compression cannot shrink every file</strong>: there are more files of length $\le n$ than of length $<n$, so pigeonhole forces some file to grow—the combinatorial heart of the information-theoretic compression limit (<em>pigeonhole ↔ information theory</em>). In ML, it explains why a finite-capacity network can't memorize an arbitrarily large dataset without representational collisions.</p>
+  </div>
+
+  <div class="section">
+    <div class="essence"><strong>In one line:</strong> when there are more things than places, collision isn't luck—it's a theorem.</div>
+    <div class="think"><strong>Question:</strong> Take any $n+1$ positive integers not exceeding $2n$; prove two of them are coprime. How do you design the "holes" so pigeonhole hands you the answer? (Hint: treat each consecutive pair $\{2k-1, 2k\}$ as one hole.)</div>
+  </div>
+</div>
+
+<!-- Concept 3: Inclusion-Exclusion -->
+<div class="card">
+  <h2>Inclusion–Exclusion</h2>
+  <div class="en-name">The precise accounting of "add too much, then subtract it back"</div>
+  <span class="tag">Counting</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>18 people play chess, 15 swim. How many play chess <em>or</em> swim? You can't just add $18+15$—because <strong>those who do both got counted twice</strong>, and the overlap must be subtracted once.<br><br>Three sets get subtler: add the three singles, subtract each pairwise intersection (each over-counted once), but the triple-common part, added 3 times and subtracted 3 times, has dropped to zero—so add it back once. <strong>Add → subtract → add</strong>, alternating signs, like a self-correcting accounting crew: each layer of correction repairs the previous layer's over-correction, so the books balance to the penny.</p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="115" cy="70" r="55" fill="#3a6088" fill-opacity="0.28" stroke="#3a6088"/>
+      <circle cx="185" cy="70" r="55" fill="#c9a96b" fill-opacity="0.32" stroke="#8a7340"/>
+      <circle cx="150" cy="115" r="55" fill="#c9544a" fill-opacity="0.25" stroke="#c9544a"/>
+      <text x="90" y="60" font-size="14" fill="#1e3a5f">A</text>
+      <text x="205" y="60" font-size="14" fill="#1e3a5f">B</text>
+      <text x="146" y="138" font-size="14" fill="#1e3a5f">C</text>
+      <text x="150" y="78" font-size="11" fill="#1e3a5f" text-anchor="middle" font-style="italic">center over-counted</text>
+    </svg>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal definition</div>
+    <div class="formula-box">$$|A\cup B\cup C| = |A|+|B|+|C| - |A\cap B| - |A\cap C| - |B\cap C| + |A\cap B\cap C|$$</div>
+    <p>General form: $\left|\bigcup_i A_i\right| = \sum_k (-1)^{k-1} \sum_{|S|=k}\left|\bigcap_{i\in S} A_i\right|$. It looks scary but reads simply: <em>sum the sizes of all "intersections of $k$ sets," positive for odd $k$, negative for even $k$</em>. That $(-1)^{k-1}$ is just the add-subtract-add switch.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why it's beautiful</div>
+    <p>The alternating signs aren't ad hoc; they exactly encode how an element's repeated counts cancel within the binomial expansion, guarded by the identity $\sum_k (-1)^k\binom{m}{k}=0$. The most charming application is <strong>derangements</strong>: the probability that $n$ letters all land in the wrong envelopes converges, as $n$ grows, to $1/e\approx 0.368$. A purely discrete "stuff the envelopes" game, and out of the limit drops the natural constant $e$—<em>combinatorics shakes hands with analysis</em>, exactly the mark of what Hardy called "depth."</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>Number theory's <strong>sieve of Eratosthenes</strong> is inclusion–exclusion at heart: to count primes up to $N$, subtract multiples of 2, of 3..., then add back "multiples of both 2 and 3"—and Euler's totient $\varphi(n)$ falls right out (<em>inclusion–exclusion ↔ number-theoretic sieves</em>). Database optimizers use it to estimate the size of `OR` conditions; probability uses it for "at least one event occurs"; reliability engineering uses it for "at least one path works."</p>
+  </div>
+
+  <div class="section">
+    <div class="essence"><strong>In one line:</strong> the price of honest counting is admitting you counted too much—then redeeming it layer by layer with alternating signs.</div>
+    <div class="think"><strong>Question:</strong> The derangement probability converges to $1/e$, meaning "everything misplaced" stays roughly 37% almost independent of $n$. Why does a constraint that seems harder for larger $n$ have stabilizing difficulty? What is its hidden link to the Poisson "rare events" distribution?</div>
+  </div>
+</div>
+
+<!-- Concept 4: Generating Functions -->
+<div class="card">
+  <h2>Generating Functions</h2>
+  <div class="en-name">Hang an entire sequence on an algebraic clothesline</div>
+  <span class="tag">Algebraic Combinatorics</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>Herbert Wilf put it famously: <em>"A generating function is a clothesline on which we hang up a sequence of numbers for display."</em> Write a sequence $a_0, a_1, a_2, \dots$ as the coefficients of the power series $a_0 + a_1 x + a_2 x^2 + \cdots$—where $x$ stands for no actual value, just a <strong>hanger that labels each position</strong>.<br><br>Why bother? The magic: <strong>combinatorial "concatenation" turns into algebraic "multiplication."</strong> Merging the choices of two objects corresponds to multiplying two generating functions; polynomial multiplication automatically pairs and sums all the combinations for you. So "how many combinations" — a discrete mental chore — gets translated into "expand a function, read off a coefficient," a mechanical algebraic chore: <em>the hard problem, restated in a new language, solves itself</em>.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal definition</div>
+    <div class="formula-box">$$G(x)=\sum_{n\ge 0} a_n\, x^n$$</div>
+    <p>$a_n$ is the counting sequence you care about (how many ways for term $n$), and $x^n$ is its "address tag." We almost never plug a number into $x$, nor ask whether the series converges—it is a <strong>formal power series</strong>, just an algebraic garment for the sequence. Key correspondences: sequence convolution $\leftrightarrow$ function product; shift $\leftrightarrow$ times $x$; linear recurrence $\leftrightarrow$ a rational-function equation.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why it's beautiful</div>
+    <p>It bridges <strong>the discrete and the continuous</strong>. The Fibonacci sequence, defined by $F_n=F_{n-1}+F_{n-2}$, seems computable only term by term; yet written as a generating function the recurrence becomes the equation $G(x)=\frac{x}{1-x-x^2}$, and a partial-fraction split yields the closed-form Binet formula outright—with the golden ratio $\varphi$ sitting in the exponent. <em>Inside the soul of an integer sequence lives an irrational number.</em> This is the 3Blue1Brown-style astonishment: move the problem to the right stage (here, algebra/analysis) and the structure reveals itself.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>The probability <strong>generating function</strong> $E[x^X]$ turns "the distribution of a sum of random variables" from tedious convolution into simple multiplication—a workhorse of queueing theory and branching processes. Algorithm analysis (Knuth, <em>Concrete Mathematics</em>) uses it for exact complexity of recurrences. In statistical physics, the <strong>partition function</strong> $Z=\sum_s e^{-\beta E_s}$ is a generating function—every thermodynamic quantity comes from differentiating it (<em>generating functions ↔ partition functions</em>), a line running straight to energy-based models and softmax in machine learning.</p>
+  </div>
+
+  <div class="section">
+    <div class="essence"><strong>In one line:</strong> hide a sequence in a function's coefficients, and the discrete counting problem borrows the full toolkit of algebra and calculus.</div>
+    <div class="think"><strong>Question:</strong> $\frac{1}{1-x}=1+x+x^2+\cdots$ has all-1 coefficients—it "generates" the simplest choice, "take each item or not." Swap it for $\frac{1}{1-x^2}$: what coefficient sequence appears, and what "take only in pairs" combinatorial constraint does it encode?</div>
+  </div>
+</div>
+
+<div class="foot-h">Deeper Reflections</div>
+
+<details>
+<summary>Why is combinatorics often called "the mathematics without a unified theory"? Flaw or feature?</summary>
+<div>Unlike calculus with its core machine (limit—derivative—integral), combinatorics is more of a toolbox: pigeonhole, inclusion–exclusion, generating functions, bijections, the probabilistic method—each its own kingdom, with solutions hinging on a flash of insight rather than routine. Rota spent his life seeking a unifying frame (e.g. Möbius inversion generalizing inclusion–exclusion to any poset), yet "creativity required" is its charm: every good combinatorial problem is a miniature mathematical discovery. This is exactly the exploratory joy Lockhart champions in <em>A Mathematician's Lament</em>.</div>
+</details>
+
+<details>
+<summary>Why is a "bijective proof" considered the most beautiful proof form in combinatorics?</summary>
+<div>To show two sets have equal size, the clumsy way is to count each and compare; the elegant way is to build a one-to-one correspondence (bijection) so you "know they're equal without counting." A bijection turns abstract numerical equality into a concrete, tangible pairing. For instance, proving $\binom{n}{k}=\binom{n}{n-k}$ needs only noting that "chosen" and "unchosen" correspond one-to-one—no computation. This echoes pigeonhole's existence philosophy: combinatorics keeps asking whether we can grasp quantity by seeing structure itself, not by brute force.</div>
+</details>
+
+<details>
+<summary>How does the "probabilistic method" prove a deterministic existence claim using randomness?</summary>
+<div>Paul Erdős's astonishing trick: to prove "an object with property P exists," construct one at random and show it has P with positive probability—since the probability exceeds zero, such an object must exist. Like pigeonhole, it's non-constructive, yet it cracks problems pure combinatorics can't touch (lower bounds, Ramsey numbers). It reveals the deep entanglement of probability and combinatorics: randomness isn't only for modeling uncertainty—it is itself a <strong>proof tool</strong>.</div>
+</details>
+
+<details>
+<summary>Why is combinatorial explosion the source of complexity theory (P vs NP)?</summary>
+<div>Many problems (traveling salesman, Boolean satisfiability) have candidate-solution counts that grow factorially or exponentially—the permutations of $n=50$ already exceed the atoms in the universe. The essence of NP is: the solution space explodes combinatorially, but verifying a given solution is fast. P vs NP asks whether this gulf between "finding" and "verifying" is essential. Combinatorics supplies the language to characterize solution-space size, and this Millennium problem is the ultimate form of the combinatorial question "how hard is it, really, to count?"</div>
+</details>
+
+<details>
+<summary>Why does nature (crystals, viral capsids, honeycombs) favor particular combinatorial-symmetric structures?</summary>
+<div>Viral shells are often icosahedral, honeycombs hexagonal—no accident: under the constraint "build a stable container with the least material and fewest genetic instructions," the feasible symmetric configurations are finite and enumerable—a meeting of combinatorics, geometry, and energy minimization. Life never studied group theory, yet under evolutionary pressure it converges repeatedly to the same few combinatorial optima. This echoes the pigeonhole–Ramsey theme: under constraint, possibility is sharply compressed, and structure emerges spontaneously from scale and limitation.</div>
+</details>
+
+<nav class="bottom">
+  <a href="index.en.html">← Back to Mathematics Daily</a>
+</nav>
+
+</div>
+</body>
+</html>
