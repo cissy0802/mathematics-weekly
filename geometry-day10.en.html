@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geometry &amp; Curvature · Day 10 — Mathematics Daily</title>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+};
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Georgia,"Computer Modern","Noto Serif SC",serif;background:#f5f7fa;color:#1a1f2e;line-height:1.85}
+.container{max-width:780px;margin:0 auto;padding:24px 22px 64px}
+header{text-align:center;padding:52px 0 36px;border-bottom:1px solid #c0c8d4;margin-bottom:36px}
+header .kicker{font-size:0.82rem;letter-spacing:4px;color:#3a6088;text-transform:uppercase;margin-bottom:14px}
+header h1{font-size:2.2rem;font-weight:800;color:#1e3a5f;font-family:"Times New Roman",Georgia,serif;font-style:italic;letter-spacing:1px}
+header .meta{margin-top:14px;font-size:0.92rem;color:#5a7090}
+header .epigraph{margin-top:22px;font-size:0.95rem;color:#5a7090;font-style:italic;max-width:560px;margin-left:auto;margin-right:auto;padding:0 16px;border-left:2px solid #c0c8d4;border-right:2px solid #c0c8d4}
+.card{background:#fff;border-radius:8px;padding:32px 30px;margin-bottom:28px;box-shadow:0 2px 14px rgba(30,58,95,0.07);border-top:3px solid #3a6088}
+.card h2{font-size:1.45rem;color:#1e3a5f;font-family:"Times New Roman",Georgia,serif;margin-bottom:4px;font-weight:700}
+.card .en-name{font-size:0.95rem;color:#5a7090;font-style:italic;margin-bottom:10px}
+.tag{display:inline-block;background:#e6ecf3;color:#3a6088;font-size:0.72rem;padding:3px 10px;border-radius:12px;letter-spacing:1px;margin-bottom:18px;text-transform:uppercase}
+.section{margin-top:18px}
+.section .label{font-size:0.78rem;color:#3a6088;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.section .label::before{content:"";display:inline-block;width:14px;height:1px;background:#3a6088}
+.section p{font-size:1rem;color:#2a3548}
+.section ul{margin-top:4px;padding-left:22px}
+.section ul li{margin-bottom:4px}
+.formula-box{background:#f0f4f9;border-left:3px solid #1e3a5f;padding:18px 22px;margin:14px 0;font-size:1.1rem;color:#1e3a5f;text-align:center;overflow-x:auto}
+.intuition{background:#fbfaf3;border-left:3px solid #c9a96b;padding:14px 18px;margin-top:6px;font-style:italic;color:#3d3520}
+.viz{display:flex;justify-content:center;margin:22px 0;padding:18px;background:#fafbfd;border-radius:6px}
+.viz svg{max-width:100%;height:auto}
+.think{background:#eef2f6;padding:14px 18px;border-radius:4px;font-size:0.96rem;color:#2a3548;margin-top:6px;border-left:3px solid #1e3a5f}
+details{background:#fff;border-radius:6px;padding:6px 18px;margin-bottom:12px;box-shadow:0 1px 8px rgba(30,58,95,0.06)}
+details summary{cursor:pointer;font-weight:600;color:#1e3a5f;padding:10px 0;font-size:1rem}
+details div{padding:0 0 12px;font-size:0.95rem;color:#3a4658}
+.deep h2{font-size:1.3rem;color:#1e3a5f;text-align:center;margin:40px 0 20px;font-family:"Times New Roman",Georgia,serif}
+nav.bottom{text-align:center;margin-top:40px;padding-top:24px;border-top:1px solid #c0c8d4}
+nav.bottom a{color:#3a6088;text-decoration:none;font-size:0.95rem;font-style:italic}
+nav.bottom a:hover{color:#1e3a5f}
+@media(max-width:600px){.container{padding:16px 14px 40px}header h1{font-size:1.55rem}.card{padding:24px 18px}.card h2{font-size:1.2rem}.formula-box{font-size:0.95rem;padding:14px 12px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="kicker">Day 10 · 2026.06.20</div>
+  <h1>Geometry &amp; Curvature</h1>
+  <div class="meta">The Shape of Space — when space itself begins to bend</div>
+  <div class="epigraph">"Geometry is not true, it is advantageous." — Henri Poincaré</div>
+</header>
+
+<!-- Concept 1: The Parallel Postulate -->
+<div class="card">
+  <h2>The Parallel Postulate</h2>
+  <div class="en-name">Non-Euclidean Geometry · the liberation of geometry</div>
+  <span class="tag">Foundations / Geometry</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>Euclid built all of geometry on 5 postulates. The first 4 read like common sense; the 5th (the parallel postulate) is long and awkward: <strong>through a point not on a line, exactly one parallel can be drawn</strong>. It looks far too much like a theorem that ought to be proved — so for two thousand years brilliant minds tried to derive it from the first four, and all failed.<br><br>The turning point came in the 19th century: Bolyai, Lobachevsky, and Gauss each realized the 5th postulate <em>cannot be proved</em>, because you can deny it without any contradiction. Replace "exactly one parallel" with "infinitely many," and a fully self-consistent geometry grows out of it. That unsettling postulate was never a truth — it was a <strong>choice</strong>.</p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 420 150" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(20,20)">
+        <text x="50" y="-2" font-size="10" fill="#3a6088" text-anchor="middle">Flat K=0</text>
+        <polygon points="10,100 90,100 50,30" fill="#dce4ee" stroke="#1e3a5f" stroke-width="1.5"/>
+        <text x="50" y="125" font-size="10" fill="#5a7090" text-anchor="middle">angles = 180°</text>
+      </g>
+      <g transform="translate(160,20)">
+        <text x="50" y="-2" font-size="10" fill="#3a6088" text-anchor="middle">Sphere K&gt;0</text>
+        <circle cx="50" cy="60" r="42" fill="#eef3f8" stroke="#aab6c6" stroke-width="0.8"/>
+        <path d="M 20 90 Q 50 78 80 90 Q 70 50 50 22 Q 30 50 20 90 Z" fill="#dce4ee" stroke="#c9544a" stroke-width="1.5"/>
+        <text x="50" y="125" font-size="10" fill="#5a7090" text-anchor="middle">&gt; 180° (bulge)</text>
+      </g>
+      <g transform="translate(300,20)">
+        <text x="50" y="-2" font-size="10" fill="#3a6088" text-anchor="middle">Saddle K&lt;0</text>
+        <path d="M 10 95 Q 50 110 90 95 Q 70 60 50 32 Q 30 60 10 95 Z" fill="#dce4ee" stroke="#7a9a6a" stroke-width="1.5"/>
+        <text x="50" y="125" font-size="10" fill="#5a7090" text-anchor="middle">&lt; 180° (pinch)</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal definition</div>
+    <p>The three geometries differ by "how many parallels through an outside point" and "the angle sum of a triangle": <strong>Euclidean (flat)</strong> — exactly one parallel, angle sum $=180°$; <strong>hyperbolic (negative curvature)</strong> — infinitely many parallels, angle sum $<180°$; <strong>elliptic / spherical (positive curvature)</strong> — no parallels, angle sum $>180°$. All three are contradiction-free; only the replaced postulate differs.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why it's beautiful</div>
+    <p>This was the greatest <strong>loosening</strong> in the history of math: axioms were demoted from "truths about reality" to "freely chosen logical starting points," and geometry stopped being the <em>only</em> way to describe the world. Once an assumption so obvious no one dared touch it was denied, an entire new universe unfolded in perfect order — and this nerve to "question the obvious and win a new world" is mathematics at its most enchanting.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>Spherical geometry is the substrate of GPS and every map projection. Hyperbolic geometry has a striking use in AI: <strong>hyperbolic embeddings</strong> represent hierarchical / tree-shaped data almost without distortion — hyperbolic space's "volume grows exponentially with radius," matching a tree's exponential branching, so it packs hierarchies (knowledge graphs, social networks) into very few dimensions that flat space cannot hold. Escher's <em>Circle Limit</em> is exactly the Poincaré disk model of the hyperbolic plane.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">In one line</div>
+    <p>Deny an "obvious" axiom without contradiction and a new world is born — geometry is chosen, not discovered.</p>
+    <div class="think">If the parallel postulate is freely replaceable, do words like "line" and "parallel" still mean the same thing across different geometries? When definitions shift with the system, on what grounds do we call them the "same" concept?</div>
+  </div>
+</div>
+
+<!-- Concept 2: Curvature -->
+<div class="card">
+  <h2>Curvature</h2>
+  <div class="en-name">Curvature · the bend you can measure without leaving the surface</div>
+  <span class="tag">Differential Geometry</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>Here is a subtle question: <strong>can an ant living on a surface, never able to jump into 3D to look down, tell whether its world is curved?</strong> Gauss's answer: yes, by measuring.<br><br>Draw a small circle of radius $r$ around a point on the surface and measure its circumference. On a plane it is exactly $2\pi r$. But on a <strong>sphere</strong> the circumference is <em>less</em> than $2\pi r$ — space is squeezed inward; on a <strong>saddle</strong> it is <em>greater</em> than $2\pi r$ — there is extra ruffled room. This "deviation of the circumference from $2\pi r$" exposes the curvature. Curvature is <strong>intrinsic</strong>: no outside view needed, measuring distances is enough.</p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 380 140" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(20,10)">
+        <text x="45" y="10" font-size="10" fill="#3a6088" text-anchor="middle">K=0</text>
+        <circle cx="45" cy="70" r="34" fill="none" stroke="#1e3a5f" stroke-width="1.5"/>
+        <line x1="45" y1="70" x2="79" y2="70" stroke="#888" stroke-dasharray="3,2"/>
+        <text x="45" y="125" font-size="9.5" fill="#5a7090" text-anchor="middle">C = 2πr</text>
+      </g>
+      <g transform="translate(145,10)">
+        <text x="45" y="10" font-size="10" fill="#c9544a" text-anchor="middle">K&gt;0</text>
+        <circle cx="45" cy="70" r="34" fill="#eef3f8" stroke="#aab6c6" stroke-width="0.8"/>
+        <circle cx="45" cy="70" r="24" fill="none" stroke="#c9544a" stroke-width="1.5"/>
+        <line x1="45" y1="70" x2="79" y2="70" stroke="#888" stroke-dasharray="3,2"/>
+        <text x="45" y="125" font-size="9.5" fill="#5a7090" text-anchor="middle">C &lt; 2πr</text>
+      </g>
+      <g transform="translate(270,10)">
+        <text x="45" y="10" font-size="10" fill="#7a9a6a" text-anchor="middle">K&lt;0</text>
+        <path d="M 11 70 Q 45 50 79 70 Q 60 96 45 96 Q 30 96 11 70 Z" fill="none" stroke="#7a9a6a" stroke-width="1.5"/>
+        <line x1="45" y1="70" x2="79" y2="70" stroke="#888" stroke-dasharray="3,2"/>
+        <text x="45" y="125" font-size="9.5" fill="#5a7090" text-anchor="middle">C &gt; 2πr</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal definition</div>
+    <p>Use the <strong>Gaussian curvature</strong> $K$ to gauge bending: $K>0$ sphere, $K=0$ plane, $K<0$ hyperbolic. It ties directly to a triangle's angle sum — the <strong>Gauss–Bonnet theorem</strong> says the angular excess (angle sum minus $\pi$) equals the integral of curvature over the triangle: $$\sum\theta_i-\pi=\iint_T K\,dA$$ The left side is pure "angle measuring," the right side the "total amount of bending." The more bulged the angles, the more positive curvature is hidden inside.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why it's beautiful</div>
+    <p>Curvature condenses the vague notion of "shape" into a <strong>computable number</strong>, and that number is intrinsic — however you stuff the surface into an outer space, as long as on-surface distances are preserved, $K$ stays fixed. Roll a sheet of paper into a cylinder: it looks bent, yet $K$ is still $0$. "Bending" turns out to come in two kinds — the kind that changes intrinsic geometry and the kind that doesn't. Cleanly separating them is the first ray of light in differential geometry.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>Computer graphics uses discrete curvature to drive mesh smoothing and simplification. Map projection is <em>necessarily</em> distorted precisely because the sphere has $K\neq0$ while paper has $K=0$, so no distance-preserving correspondence exists. In machine learning, <strong>manifold learning</strong> assumes high-dimensional data lies on a low-dimensional curved manifold, with curvature characterizing its local geometry; optimal transport also computes on curved probability manifolds. Curvature is also the star of the next card — gravity.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">In one line</div>
+    <p>Curvature is the bend a surface's own inhabitants can detect by measuring distances — shape, for the first time, has a number that needs no outside view.</p>
+    <div class="think">If our 3D space had a tiny positive curvature overall, you could in principle detect it by measuring "a huge triangle whose angle sum is slightly over 180°." Humans have actually done cosmological measurements like this — how would you design such a "cosmic protractor"?</div>
+  </div>
+</div>
+
+<!-- Concept 3: Theorema Egregium -->
+<div class="card">
+  <h2>Theorema Egregium</h2>
+  <div class="en-name">Gauss's Remarkable Theorem · bending can't hide intrinsic geometry</div>
+  <span class="tag">Differential Geometry</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>Roll a flat sheet into a cylinder — it is plainly bent in 3D, yet the geometry on the paper <strong>does not budge</strong>: straight lines stay straight, triangle angles still sum to $180°$. You can roll, bend, and twist the paper freely, but you can <em>never</em> flatten a sphere onto paper without tearing or stretching it. This is the very reason every flat map must distort.<br><br>The kitchen version says it best: a floppy slice of pizza, once folded into a curve along one direction, <strong>refuses to droop along the other</strong> — the curvature you force into it forces the other direction to stay rigid. Gauss proved the iron law behind this: <strong>curvature is intrinsic, no amount of bending can change it.</strong></p>
+  </div>
+
+  <div class="formula-box">$$K \text{ is invariant under isometry (it depends only on on-surface distances, not on the embedding)}$$</div>
+
+  <div class="section">
+    <div class="label">Formal definition</div>
+    <p>Gaussian curvature $K$ is invariant under <strong>isometry</strong> (any deformation preserving all distances on the surface). In other words, $K$ is determined solely by the <em>first fundamental form</em> (the surface's intrinsic metric — how lengths and angles are measured) and is <strong>entirely independent</strong> of the second fundamental form (how the surface bends into the outer space). Roll up paper: the external bending changes, the intrinsic metric does not, so $K$ stays $0$.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why it's beautiful</div>
+    <p>"Egregium" is Latin for "remarkable, outstanding" — the name Gauss gave it himself, a rare burst of affection for one's own theorem. The beauty is in the <strong>surprise</strong>: curvature looks like a property "you can only see from outside," yet Gauss proved it is <em>fully determined by inside measurements of distance</em>. The boundary between inner and outer is breached at a stroke, intrinsic geometry is born, and Riemann's next step is lit directly from it.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>It explains why <strong>a perfect map cannot exist</strong>: Mercator preserves angles but inflates the poles, equal-area projections distort shapes — you can't have both. In engineering, eggshells, domes, and thin-shell roofs are remarkably strong with minimal material because, once bent into a surface, curvature "locks in" rigidity — to crush it you must change intrinsic lengths, at huge cost. The same principle keeps a folded pizza slice from drooping, lets corrugated cardboard and thin can walls resist pressure; sheet-metal forming is bound by the theorem too.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">In one line</div>
+    <p>You can change how a surface bends into space, but not its intrinsic curvature — that's why maps can't fool you and folded pizza won't droop.</p>
+    <div class="think">The theorem says a sphere can't be flattened without distortion. So flip it: which surfaces <em>can</em> be flattened onto a plane without distortion (mathematicians call them "developable")? Think of cylinders and cones — what do they share, and how do they differ from a sphere?</div>
+  </div>
+</div>
+
+<!-- Concept 4: Geometry of General Relativity -->
+<div class="card">
+  <h2>Gravity Is Curvature</h2>
+  <div class="en-name">The Geometry of General Relativity</div>
+  <span class="tag">Riemannian Geometry / Physics</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>Newton said gravity is a <strong>force</strong>, reaching across the void to yank planets toward the Sun. Einstein said: there is no force, only <strong>curved spacetime</strong>. Mass tells spacetime how to bend, and bent spacetime tells matter how to move.<br><br>A planet orbiting the Sun is not held on a leash; it is simply following the <strong>straightest possible path</strong> (a geodesic) through spacetime curved by the Sun. Just as a plane on a great-circle route is "going straight" at every step, yet draws an arc on a flat map. Drop a heavy ball on a trampoline and marbles circle the dip — not because the ball "attracts" them, but because the surface is bent. Gravity is the shadow of spacetime geometry.</p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 360 170" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#aab6c6" stroke-width="0.8" fill="none">
+        <path d="M 20 40 Q 180 30 340 40"/>
+        <path d="M 20 70 Q 180 95 340 70"/>
+        <path d="M 20 100 Q 180 150 340 100"/>
+        <path d="M 20 130 Q 180 155 340 130"/>
+        <path d="M 40 25 Q 35 85 40 145"/>
+        <path d="M 110 25 Q 95 90 110 148"/>
+        <path d="M 180 25 Q 180 95 180 150"/>
+        <path d="M 250 25 Q 265 90 250 148"/>
+        <path d="M 320 25 Q 325 85 320 145"/>
+      </g>
+      <circle cx="180" cy="108" r="13" fill="#1e3a5f"/>
+      <ellipse cx="180" cy="105" rx="92" ry="34" fill="none" stroke="#c9544a" stroke-width="1.6" stroke-dasharray="5,3"/>
+      <circle cx="272" cy="105" r="5" fill="#c9544a"/>
+      <text x="180" y="166" font-size="10" fill="#3a6088" text-anchor="middle" font-style="italic">mass curves spacetime · planet follows a geodesic</text>
+    </svg>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal definition</div>
+    <p>Einstein's field equations pin geometry and matter to the two sides of an equals sign: $$G_{\mu\nu}=\frac{8\pi G}{c^{4}}\,T_{\mu\nu}$$ The left side $G_{\mu\nu}$ is <strong>spacetime curvature</strong> (a contraction of the Riemann curvature); the right side $T_{\mu\nu}$ is the <strong>distribution of matter and energy</strong>. In a sentence: matter-energy decides curvature, and curvature decides how matter moves (free-falling along geodesics). Gravity is thoroughly translated into the language of geometry.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why it's beautiful</div>
+    <p>In 1854, out of pure abstract interest, Riemann developed the geometry of curved spaces of any dimension, with no physical motive. Sixty years later this "useless" math turned out to be the <em>only</em> fitting language for Einstein's gravity. This is the most stunning instance of Wigner's "<strong>unreasonable effectiveness of mathematics</strong>": a geometric tool lay quietly for half a century before the universe came to claim it. Dissolving "force" entirely into "bending" is one of physics' deepest aesthetic victories.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>This is no idle philosophy: the <strong>GPS</strong> in your pocket uses it daily — satellites sit in a weaker gravitational field, their clocks run faster, and without relativistic correction positioning would drift about $10$ km per day. <strong>Gravitational lensing</strong> bends light from distant galaxies; a <strong>black hole</strong> is a region where curvature is so extreme even light can't escape; in 2015 LIGO directly detected <strong>gravitational waves</strong> — ripples in spacetime itself — turning Riemann's century-and-a-half-old pure math into a trembling signal in the lab.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">In one line</div>
+    <p>Gravity is not a force but the shape of spacetime — matter bends space, and bent space commands matter where to go.</p>
+    <div class="think">If gravity is just geometry, then "feeling no weight in free fall" makes perfect sense — you're merely following a geodesic. Yet standing on the ground we feel our weight, because the ground <em>stops</em> us from following the geodesic. So: who is really accelerating, the falling object or the standing one?</div>
+  </div>
+</div>
+
+<!-- Deep dive -->
+<div class="deep">
+  <h2>Going Deeper</h2>
+
+  <details>
+    <summary>What exactly is the difference between "intrinsic" and "extrinsic" geometry, and why does it matter so much?</summary>
+    <div>Extrinsic geometry cares how a surface sits inside a larger space (e.g. a cylinder curling around in 3D); intrinsic geometry cares only what an inhabitant of the surface can sense by measuring distances and angles. Gauss's Theorema Egregium proves curvature is purely intrinsic — and that step is crucial: it means studying curved space <strong>requires no presupposed higher-dimensional outer space</strong>. That's why Riemannian geometry can describe the curving of four-dimensional spacetime itself — our universe need not be embedded in some fifth dimension to be "curved."</div>
+  </details>
+
+  <details>
+    <summary>Why do hierarchical / tree-shaped data "naturally belong" in hyperbolic space?</summary>
+    <div>A tree with branching factor $b$ has $b^{n}$ nodes at depth $n$ — node count grows <strong>exponentially</strong> with depth. In Euclidean space, the volume of a ball of radius $r$ grows only polynomially ($r^{d}$), so it can't hold the exploding node count and distortion is inevitable. Hyperbolic space, however, has volume growing <em>exponentially</em> with radius, matching the tree's expansion rate. So trees embed into hyperbolic space at very low dimension with almost no distortion — the mathematical root of why knowledge graphs and recommender systems have recently adopted hyperbolic representations.</div>
+  </details>
+
+  <details>
+    <summary>Gauss–Bonnet links local curvature to global topology — how come?</summary>
+    <div>For a closed surface, integrating Gaussian curvature over the <em>entire</em> surface always equals $2\pi\chi$, where $\chi$ is the Euler characteristic — a purely topological integer (sphere $2$, torus $0$). The wonder: you can knead the sphere any way you like, bulging it here and denting it there, and local curvature changes endlessly, yet the <strong>total curvature is unchanged to the last bit</strong>. Local geometric freedom is tightly bound by a global topological law. This is the most beautiful bridge between Day 9's topology and today's geometry.</div>
+  </details>
+
+  <details>
+    <summary>If space can curve, what is the shape of the universe as a whole?</summary>
+    <div>It depends on the universe's total energy density. Positive curvature → a closed, finite universe (like a 3-sphere, where going straight in one direction loops back to the start); negative curvature → an open, infinite hyperbolic universe; zero curvature → flat and infinite. The Planck satellite's measurements of the cosmic microwave background show the universe is very close to <strong>flat</strong> — but whether this is coincidence or the inevitable prediction of inflation theory remains one of cosmology's central puzzles.</div>
+  </details>
+
+  <details>
+    <summary>Is it coincidence or necessity that Riemannian geometry "happened" to be gravity's language?</summary>
+    <div>No verdict, but it's tantalizing. One view: mathematicians explore all logically possible structures, and physics merely picks the one reality uses — what looks like "prediction" is really "in a vast inventory, something always fits." Another, more radical view (Wigner, Tegmark): physical reality essentially <em>is</em> a mathematical structure, so the effectiveness of math is a tautology. Whichever side you take, the story of Riemannian geometry waiting half a century to be claimed by gravity forces the question: is mathematics invented, or discovered?</div>
+  </details>
+</div>
+
+<nav class="bottom">
+  <a href="index.en.html">← Back to Mathematics Daily</a>
+</nav>
+
+</div>
+</body>
+</html>
