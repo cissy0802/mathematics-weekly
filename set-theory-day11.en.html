@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Set Theory &amp; Infinity · Day 11 — Mathematics Daily</title>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+};
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Georgia,"Computer Modern","Noto Serif SC",serif;background:#f5f7fa;color:#1a1f2e;line-height:1.85}
+.container{max-width:780px;margin:0 auto;padding:24px 22px 64px}
+header{text-align:center;padding:52px 0 36px;border-bottom:1px solid #c0c8d4;margin-bottom:36px}
+header .kicker{font-size:0.82rem;letter-spacing:4px;color:#3a6088;text-transform:uppercase;margin-bottom:14px}
+header h1{font-size:2.2rem;font-weight:800;color:#1e3a5f;font-family:"Times New Roman",Georgia,serif;font-style:italic;letter-spacing:1px}
+header .meta{margin-top:14px;font-size:0.92rem;color:#5a7090}
+header .epigraph{margin-top:22px;font-size:0.95rem;color:#5a7090;font-style:italic;max-width:560px;margin-left:auto;margin-right:auto;padding:0 16px;border-left:2px solid #c0c8d4;border-right:2px solid #c0c8d4}
+.card{background:#fff;border-radius:8px;padding:32px 30px;margin-bottom:28px;box-shadow:0 2px 14px rgba(30,58,95,0.07);border-top:3px solid #3a6088}
+.card h2{font-size:1.45rem;color:#1e3a5f;font-family:"Times New Roman",Georgia,serif;margin-bottom:4px;font-weight:700}
+.card .en-name{font-size:0.95rem;color:#5a7090;font-style:italic;margin-bottom:10px}
+.tag{display:inline-block;background:#e6ecf3;color:#3a6088;font-size:0.72rem;padding:3px 10px;border-radius:12px;letter-spacing:1px;margin-bottom:18px;text-transform:uppercase}
+.section{margin-top:18px}
+.section .label{font-size:0.78rem;color:#3a6088;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.section .label::before{content:"";display:inline-block;width:14px;height:1px;background:#3a6088}
+.section p{font-size:1rem;color:#2a3548}
+.section ul{margin-top:4px;padding-left:22px}
+.section ul li{margin-bottom:4px}
+.formula-box{background:#f0f4f9;border-left:3px solid #1e3a5f;padding:18px 22px;margin:14px 0;font-size:1.1rem;color:#1e3a5f;text-align:center;overflow-x:auto}
+.viz{display:flex;justify-content:center;margin:22px 0;padding:18px;background:#fafbfd;border-radius:6px}
+.viz svg{max-width:100%;height:auto}
+.think{background:#eef2f6;padding:14px 18px;border-radius:4px;font-size:0.96rem;color:#2a3548;margin-top:6px;border-left:3px solid #1e3a5f}
+.deep{background:#fff;border-radius:8px;padding:30px;margin-top:36px;box-shadow:0 2px 14px rgba(30,58,95,0.07);border-top:3px solid #c9a96b}
+.deep h2{font-size:1.4rem;color:#1e3a5f;font-family:"Times New Roman",Georgia,serif;margin-bottom:14px}
+.deep details{margin-bottom:12px;border-bottom:1px solid #e6ecf3;padding-bottom:10px}
+.deep summary{cursor:pointer;font-weight:600;color:#3a6088;font-size:0.98rem}
+.deep details div{margin-top:8px;font-size:0.94rem;color:#2a3548}
+nav.bottom{text-align:center;margin-top:40px;padding-top:24px;border-top:1px solid #c0c8d4}
+nav.bottom a{color:#3a6088;text-decoration:none;font-size:0.95rem;font-style:italic}
+nav.bottom a:hover{color:#1e3a5f}
+@media(max-width:600px){.container{padding:16px 14px 40px}header h1{font-size:1.55rem}.card{padding:24px 18px}.card h2{font-size:1.2rem}.formula-box{font-size:0.95rem;padding:14px 12px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="kicker">Day 11 · 2026.06.27</div>
+  <h1>Set Theory &amp; Infinity</h1>
+  <div class="meta">When mathematics first looked infinity in the eye — and found it comes in different sizes</div>
+  <div class="epigraph">"No one shall expel us from the paradise that Cantor has created for us." — David Hilbert</div>
+</header>
+
+<!-- Concept 1: Bijection & Countable Infinity -->
+<div class="card">
+  <h2>Bijection &amp; Countable Infinity</h2>
+  <div class="en-name">The only tool we have for comparing infinities</div>
+  <span class="tag">Set Theory</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>How do you tell two herds are "the same size"? A shepherd who can't count still can: drop a pebble for each sheep that leaves, pick one back up for each that returns. No pebbles left over, no sheep lost. <strong>You never count — you only need a one-to-one pairing</strong>, and the two sides match.<br><br>Cantor's audacity was to drive this ruler straight into the infinite. Which has more — the integers $1,2,3,\dots$ or the evens $2,4,6,\dots$? Intuition screams "twice as many integers." Yet every integer $n$ pairs exactly with the even $2n$: none left out, none doubled. <strong>So they are the same size.</strong> A part equal to the whole — that is the fingerprint of infinity. An infinity that pairs with the naturals is called <strong>countable</strong>.</p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 360 130" xmlns="http://www.w3.org/2000/svg">
+      <text x="40" y="24" font-size="12" fill="#3a6088">naturals ℕ</text>
+      <text x="250" y="24" font-size="12" fill="#3a6088">evens 2ℕ</text>
+      <g font-size="13" fill="#1e3a5f" text-anchor="middle">
+        <text x="55" y="50">1</text><text x="55" y="74">2</text><text x="55" y="98">3</text><text x="55" y="120">n</text>
+        <text x="290" y="50">2</text><text x="290" y="74">4</text><text x="290" y="98">6</text><text x="290" y="120">2n</text>
+      </g>
+      <g stroke="#c9544a" stroke-width="1.3">
+        <line x1="70" y1="46" x2="275" y2="46"/>
+        <line x1="70" y1="70" x2="275" y2="70"/>
+        <line x1="70" y1="94" x2="275" y2="94"/>
+        <line x1="70" y1="116" x2="275" y2="116" stroke-dasharray="4 3"/>
+      </g>
+      <text x="172" y="40" font-size="10" fill="#5a7090" text-anchor="middle" font-style="italic">n ↦ 2n (a bijection)</text>
+    </svg>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal Definition</div>
+    <p>Two sets $A,B$ are <strong>equinumerous</strong> (same cardinality) iff there is a bijection $f:A\to B$ — a map that is both <em>injective</em> (distinct inputs give distinct outputs) and <em>surjective</em> (every output is hit). A set equinumerous with $\mathbb{N}$ is countably infinite, with cardinality $\aleph_0$ (aleph-null). Strikingly, $\mathbb{Q}$ (all fractions) is also $\aleph_0$: arrange the fractions in a grid and walk a "zig-zag" path, and each gets a queue number.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why It's Beautiful</div>
+    <p>It turns a vague philosophical word, "infinity," into a <strong>comparable object</strong>. For two thousand years infinity was taboo (Aristotle allowed only "potential" infinity, denying "actual" infinity). With the plainest possible ruler — can they be paired? — Cantor ushered infinity into mathematics, and found that "part equals whole" is no paradox but the <em>defining feature</em> of infinity. The deepest counter-intuitions often come from using a familiar tool honestly, all the way down.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>"Countable" is exactly the computer-science notion of <strong>enumerable</strong>: you can write a program that spits out every element one by one. All finite strings, all programs, all rationals are countable — this marks the boundary of "objects an algorithm can handle." The next card proves the reals are <em>not</em> countable, so "almost every real can be generated by no program at all" — the very starting point of <strong>computability theory</strong>, echoing Turing's work (Day 24).</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Essence &amp; A Question</div>
+    <p>The size of an infinity rests not on "counting" but on "can it be paired"; once you accept that, part-equals-whole stops being a paradox.</p>
+    <div class="think">Hilbert's Hotel is full with countably many guests. Now countably many buses arrive, each carrying countably many passengers — can everyone still be accommodated? (Hint: it's the same trick that makes $\mathbb{Q}$ countable.)</div>
+  </div>
+</div>
+
+<!-- Concept 2: Cantor's Diagonal Argument -->
+<div class="card">
+  <h2>Cantor's Diagonal Argument</h2>
+  <div class="en-name">There are infinities larger than infinity</div>
+  <span class="tag">Cardinality</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>If even the fractions can be lined up, are <em>all</em> infinities the same size? Cantor proved: no. The reals in $[0,1)$ <strong>fit into no queue at all</strong>.<br><br>By contradiction: suppose you really did list them all, each real written as a decimal. I do one thing — <strong>walk down the diagonal and change every digit</strong>: alter the $n$-th digit of the $n$-th number. Splice the altered digits into a new real $d$. Is $d$ on the list? It differs from the 1st number in the 1st digit, from the 2nd in the 2nd digit… <strong>from every entry in at least one digit</strong>, so it is none of them. Your "complete list" missed a number — yet it was supposed to be complete. Contradiction. There are <em>strictly</em> more reals than naturals.</p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 360 170" xmlns="http://www.w3.org/2000/svg">
+      <g font-family="monospace" font-size="14">
+        <text x="20" y="30" fill="#5a7090">r₁ = 0.</text>
+        <text x="20" y="58" fill="#5a7090">r₂ = 0.</text>
+        <text x="20" y="86" fill="#5a7090">r₃ = 0.</text>
+        <text x="20" y="114" fill="#5a7090">r₄ = 0.</text>
+        <g fill="#2a3548">
+          <text x="80" y="30">1 4 1 5 …</text>
+          <text x="80" y="58">7 0 9 2 …</text>
+          <text x="80" y="86">3 3 3 3 …</text>
+          <text x="80" y="114">8 6 0 2 …</text>
+        </g>
+        <g fill="#c9544a" font-weight="bold">
+          <rect x="76" y="18" width="14" height="16" fill="#c9544a" fill-opacity="0.18"/>
+          <rect x="100" y="46" width="14" height="16" fill="#c9544a" fill-opacity="0.18"/>
+          <rect x="124" y="74" width="14" height="16" fill="#c9544a" fill-opacity="0.18"/>
+          <rect x="148" y="102" width="14" height="16" fill="#c9544a" fill-opacity="0.18"/>
+        </g>
+      </g>
+      <text x="20" y="150" font-size="13" fill="#1e3a5f" font-family="monospace">d  = 0. 2 1 4 3 …</text>
+      <text x="200" y="150" font-size="11" fill="#c9544a" font-style="italic">each digit +1, unlike everyone</text>
+    </svg>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal Definition</div>
+    <p>For any set $X$, its <strong>power set</strong> $\mathcal{P}(X)$ (the set of all subsets) is strictly larger than $X$: there is no surjection $X\to\mathcal{P}(X)$, and the diagonal argument is a special case. Hence $|\mathbb{R}|=2^{\aleph_0}>\aleph_0$, and $\aleph_0<2^{\aleph_0}<2^{2^{\aleph_0}}<\cdots$ — <strong>infinity upon infinity</strong>, a tower with no top.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why It's Beautiful</div>
+    <p>With one move — constructing an object "unlike every entry on the list" — it settles forever that infinity has levels. More beautiful is the move's <strong>universality</strong>: the same diagonal lets Gödel build "this sentence is unprovable" (incompleteness), lets Turing prove the halting problem undecidable, lets Russell detonate the paradox in the next card. One geometric gesture — <em>walk the diagonal, negate everywhere</em> — is the shared engine of the three great limitative theorems of the 20th century.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>Turing swapped the "list of reals" for a "list of programs," ran the diagonal, and produced a case "no program can correctly decide whether it halts" — and so the <strong>halting problem is undecidable</strong> (Day 24). This is no idle philosophy: it means no universal program can detect every infinite loop, every security hole. <em>The fundamental limit of software verification is carved into this diagonal.</em></p>
+  </div>
+
+  <div class="section">
+    <div class="label">Essence &amp; A Question</div>
+    <p>Whenever you can lay out a "complete" list, you can always construct the one it left out — and that is why infinity has insurmountable levels.</p>
+    <div class="think">The diagonal proves "more reals than rationals," yet can you name even <em>one</em> concrete, "typical" real guaranteed absent from a given list? Why are "most reals are indescribable" and "but I can't point to any of them" both true at once?</div>
+  </div>
+</div>
+
+<!-- Concept 3: Russell's Paradox -->
+<div class="card">
+  <h2>Russell's Paradox</h2>
+  <div class="en-name">The collapse of naive set theory</div>
+  <span class="tag">Foundations / Logic</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>Naive set theory had a seemingly harmless creed: <strong>any property carves out a set</strong>. "All red things," "all primes" — fine. In 1901 Russell asked about one lethal property:<br><br>Some sets contain themselves ("the set of all abstract concepts" is itself abstract, so it's a member of itself), some don't ("the set of all cats" is not a cat). Now — <strong>collect all sets that do NOT contain themselves</strong>, call it $R$. Does $R$ contain itself? <em>If it does, by definition it shouldn't; if it doesn't, it exactly meets the condition and should be collected into itself.</em> Either answer contradicts. The folk version is the "barber paradox": the barber "shaves all and only those who don't shave themselves" — does he shave himself?</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal Definition</div>
+    <p>Let $R=\{x : x\notin x\}$. Substituting $x=R$ gives</p>
+    <div class="formula-box">$R \in R \iff R \notin R$</div>
+    <p>A proposition equivalent to its own negation — logical explosion. The root illness is <strong>unrestricted comprehension</strong>: allowing "build a set from any property out of thin air" plants the dynamite of self-reference. When the letter arrived, Frege's <em>Foundations of Arithmetic</em> was at the printer; in the appendix he wrote, "Hardly anything more unwelcome can befall a scientist than to have the foundation give way just as the work is finished."</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why It's Beautiful</div>
+    <p>It destroyed an entire mathematical foundation in three lines, yet it also <strong>pointed to the cure</strong>: the disease lies not in "sets" but in "self-reference plus no limits." The beauty is the precision of the cut — not a vague "beware of infinity," but a pinpoint "self-reference like $x\in x$ must be disciplined." All of 20th-century mathematical logic, type theory, even the type systems of modern programming languages, answer this cut. <em>One paradox forced a discipline into being.</em></p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>Russell's own cure was <strong>type theory</strong>: stratify objects into levels, forbidding "things on the same level from talking about themselves." This is the ancestor of today's Haskell, TypeScript, and Rust type systems — the compiler's stratification rules block "self-devouring" illegal constructions. The universe hierarchies of proof assistants (Coq/Lean) inherit the same bloodline (echoing Day 19, category theory and types).</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Essence &amp; A Question</div>
+    <p>"Any property builds a set" is too generous — generous enough to build a logic bomb; mathematical rigor often begins with a precise act of <em>self-restraint</em>.</p>
+    <div class="think">Gödel's "this sentence is unprovable," the halting problem, Russell's $R$ — all share the skeleton "something asserting the negation of itself." Why does self-reference always detonate at a system's boundary? A flaw in logic, or the fate of any sufficiently powerful system?</div>
+  </div>
+</div>
+
+<!-- Concept 4: ZFC -->
+<div class="card">
+  <h2>The ZFC Axioms</h2>
+  <div class="en-name">Pouring a foundation under all of mathematics</div>
+  <span class="tag">Axiomatic Set Theory</span>
+
+  <div class="section">
+    <div class="label">Intuition</div>
+    <p>After Russell blew up the foundation, mathematicians stopped asking "what is a set" and asked instead <strong>"what rules must a set obey."</strong> ZFC (Zermelo–Fraenkel + the axiom of Choice) is that rulebook: no conjuring sets from nothing — only <strong>building them up in layers</strong> from existing sets via a few controlled operations (pairing, union, power set, subset…). Like Lego, every brick attaches to one already present, so dangerous items like "the set of all sets" simply <em>cannot be built</em>. Russell's dynamite is pulled out from under the fire.</p>
+  </div>
+
+  <div class="viz">
+    <svg viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#3a6088" fill="#dce4ee" fill-opacity="0.5">
+        <path d="M160 10 L210 150 L110 150 Z" stroke-width="1.5"/>
+      </g>
+      <g stroke="#aab6c6" stroke-width="0.8" stroke-dasharray="3 2">
+        <line x1="123" y1="50" x2="197" y2="50"/>
+        <line x1="116" y1="90" x2="204" y2="90"/>
+        <line x1="110" y1="130" x2="210" y2="130"/>
+      </g>
+      <g font-size="11" fill="#1e3a5f" text-anchor="middle">
+        <text x="160" y="26">∅</text>
+        <text x="160" y="46">V₀</text>
+        <text x="160" y="86">V₁</text>
+        <text x="160" y="126">Vₙ</text>
+      </g>
+      <text x="245" y="80" font-size="11" fill="#5a7090" font-style="italic">each</text>
+      <text x="245" y="96" font-size="11" fill="#5a7090" font-style="italic">layer: ℘</text>
+      <text x="160" y="155" font-size="9" fill="#5a7090" text-anchor="middle">the universe V, built up from ∅</text>
+    </svg>
+  </div>
+
+  <div class="section">
+    <div class="label">Formal Definition</div>
+    <p>ZFC pins down sets with about 9 axioms. Two are pivotal: <strong>Separation</strong> shrinks "unrestricted comprehension" to "you may only sift a subset out of an existing set $A$," $\{x\in A: \varphi(x)\}$ — blocking Russell; the <strong>Axiom of Choice (AC)</strong> asserts that from a family of nonempty sets you can <em>simultaneously pick one representative each</em>, even infinitely many, with no explicit rule. AC seems obvious, but its corollaries are shocking: it is equivalent to "every vector space has a basis," and it implies the <strong>Banach–Tarski paradox</strong> — a solid ball cut into finitely many pieces and reassembled into two balls of equal size.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Why It's Beautiful</div>
+    <p>ZFC's ambition is to be the <strong>common foundation of all mathematics</strong>: naturals, reals, functions, spaces — in principle all "sets," all behavior derived from these few axioms. The deeper beauty is its <em>humility</em> — Gödel and Cohen proved the <strong>Continuum Hypothesis</strong> (is there any infinity between $\aleph_0$ and $2^{\aleph_0}$?) can be <strong>neither proved nor disproved</strong> in ZFC. The foundation itself holds a question it can never answer from within. Mathematics has no God's-eye view, only a set of rules that honestly admit their own boundary.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Applications</div>
+    <p>The Axiom of Choice is the lifeline of functional analysis (Day 44): "every vector space has a basis" rests on it, and the Hilbert-space theory of quantum mechanics quietly uses it. Proof assistants like Lean/Coq encode ZFC (or stronger type theories) into computers, letting theorems be machine-checked line by line — <strong>mathematics' foundation is now literally "runnable."</strong> CH's independence has even seeped into machine-learning theory: certain "learnability" problems were shown equivalent to CH — <em>i.e. undecidable within ZFC</em> — abstract set theory blocking a threshold of AI.</p>
+  </div>
+
+  <div class="section">
+    <div class="label">Essence &amp; A Question</div>
+    <p>The point of a foundation is not "to prove everything" but to <strong>draw clearly the line between the provable and the unprovable</strong> — and honestly count that boundary in.</p>
+    <div class="think">If the Continuum Hypothesis can be neither true nor false in ZFC, does it "have an answer" at all? Are our axioms too weak and in need of one more, or does "the fine structure of infinity" simply have no unique objective fact? Are mathematical objects discovered, or selected by rules?</div>
+  </div>
+</div>
+
+<!-- Going Deeper -->
+<div class="deep">
+  <h2>Going Deeper</h2>
+
+  <details>
+    <summary>Does the "actual vs. potential infinity" debate still matter today?</summary>
+    <div>Aristotle accepted only potential infinity (a never-ending process, like "keep adding one") and denied actual infinity (a completed infinite whole, like "the set of all naturals"). Cantor's revolution was to treat infinity as a <strong>completed object</strong>. Mainstream mathematics today sides with Cantor, but intuitionism (Brouwer) still insists on potential infinity, refusing the unconditional law of excluded middle over the infinite — which directly shapes which proofs count as "legal." Computer science quietly agrees with intuitionism: a program can only generate one by one and never "holds" a completed actual infinity. The two-thousand-year argument lives on in type theory and computability.</div>
+  </details>
+
+  <details>
+    <summary>Why does the same "diagonal" detonate Cantor, Gödel, Turing, and Russell?</summary>
+    <div>All four share a skeleton: <strong>self-reference plus negation</strong>. Given a "supposedly complete" list (reals, provable statements, halting programs, sets), construct an object that <em>deliberately differs from the $n$-th entry at position $n$</em>, so it lies outside the list — contradiction. Lawvere made this sharpest in categorical terms: wherever a certain "self-action" fixed-point structure exists, diagonalization must manufacture an escaping element. These are not four coincidences but <strong>four faces of one theorem</strong> — any system powerful enough to talk about itself cannot escape this crack.</div>
+  </details>
+
+  <details>
+    <summary>Reducing all of mathematics to "sets" — insight or illusion?</summary>
+    <div>ZFC can encode the number 1 as $\{\emptyset\}$, an ordered pair as nested sets — in principle everything is a set. But this is "can," not "should": no mathematician really pictures $3$ as a string of braces. Category theory (Day 19) offers a rival foundation, emphasizing "relations between objects" rather than "what objects are made of," which is more natural for many fields. This presses a deep question: does mathematics need a <em>unique</em> foundation? Or is "foundation" itself a choice of viewpoint, with set theory and category theory just two windows onto the same edifice?</div>
+  </details>
+
+  <details>
+    <summary>"Almost all reals are indescribable" — is that statement itself describable?</summary>
+    <div>Describable numbers (definable in finite words, like $\pi$, $\sqrt2$) are only countably many, since finite strings are countable; but the reals are uncountable, so <strong>the indescribable reals are the overwhelming majority</strong>. The eerie part is that you can never exhibit a concrete example — the moment you exhibit one, you've described it. Mathematics asserts "they exist and are almost everything," yet in principle cannot <em>point to</em> a single one. This connects to algorithmic information theory too: most reals are "incompressible" random sequences with no description shorter than themselves. The vastness of infinity has already outrun what language can name.</div>
+  </details>
+</div>
+
+<nav class="bottom">
+  <a href="index.en.html">← Back to Mathematics Daily</a>
+</nav>
+
+</div>
+</body>
+</html>
